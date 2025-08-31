@@ -8,29 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .dark .dark\:bg-gray-800 { background-color: #1f2937; }
-        .dark .dark\:bg-gray-900 { background-color: #111827; }
-        .dark .dark\:text-gray-200 { color: #e5e7eb; }
-        .dark .dark\:text-gray-400 { color: #9ca3af; }
-        .dark .dark\:border-gray-700 { border-color: #374151; }
-        .dark .dark\:hover\:bg-gray-700:hover { background-color: #374151; }
-        .sidebar-icon { width: 1.5rem; height: 1.5rem; }
-    </style>
-    <script>
-        function toggleTheme() { document.documentElement.classList.toggle('dark'); }
-    </script>
+    <style> body { font-family: 'Inter', sans-serif; } .sidebar-icon { width: 1.5rem; height: 1.5rem; } </style>
+    <script> function toggleTheme() { document.documentElement.classList.toggle('dark'); } </script>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
     <div class="flex h-screen">
         <aside class="w-64 bg-white dark:bg-gray-800 flex-shrink-0">
             <div class="h-full flex flex-col">
-                <div class="h-16 flex items-center justify-center border-b border-gray-200 dark:border-gray-700">
-                    <div class="flex items-center"><img src="TrakSafe Logo Design.jpg" class="h-10 w-auto" alt="TrakSafe Logo"><span class="ml-3 text-xl font-semibold">TrakSafe</span></div>
-                </div>
+                <div class="h-16 flex items-center justify-center border-b border-gray-200 dark:border-gray-700"><div class="flex items-center"><img src="TrakSafe Logo Design.jpg" class="h-10 w-auto" alt="TrakSafe Logo"><span class="ml-3 text-xl font-semibold">TrakSafe</span></div></div>
                 <nav class="flex-1 px-2 py-4 space-y-1">
-                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
+                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
                     <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
                     <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
                     <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
@@ -43,16 +30,7 @@
             </div>
         </aside>
         <main class="flex-1 p-6 md:p-10 overflow-y-auto">
-            <header class="flex justify-between items-center mb-8">
-                <h1 class="text-3xl font-bold">Dashboard</h1>
-                <div class="flex items-center space-x-4">
-                    <div id="site-switcher" class="relative">
-                        <button id="site-switcher-button" class="flex items-center space-x-2 text-lg font-medium"><span id="current-site-name">Loading...</span><i class="fa-solid fa-chevron-down text-sm"></i></button>
-                        <div id="site-switcher-dropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-20 hidden"></div>
-                    </div>
-                    <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"><i class="fa-solid fa-moon"></i></button>
-                </div>
-            </header>
+            <header class="flex justify-between items-center mb-8"><h1 class="text-3xl font-bold">Dashboard</h1><div class="flex items-center space-x-4"><div id="site-switcher" class="relative"><button id="site-switcher-button" class="flex items-center space-x-2 text-lg font-medium"><span id="current-site-name">Loading...</span><i class="fa-solid fa-chevron-down text-sm"></i></button><div id="site-switcher-dropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-20 hidden"></div></div><button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"><i class="fa-solid fa-moon"></i></button></div></header>
             <div id="dashboard-content" class="space-y-8"></div>
             <div id="loading-spinner" class="flex justify-center items-center h-64"><i class="fas fa-spinner fa-spin fa-3x text-gray-500"></i></div>
         </main>
@@ -64,85 +42,8 @@
         const firebaseConfig = { apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw", authDomain: "inspectionapp2-88221.firebaseapp.com", projectId: "inspectionapp2-88221", storageBucket: "inspectionapp2-88221.appspot.com", messagingSenderId: "805230972315", appId: "1:805230972315:web:d00e2d1a1869aefee1653e", measurementId: "G-WHXE1XECQF" };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const auth = getAuth(app);
-        let siteChart = null;
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const dashboardContent = document.getElementById('dashboard-content');
-        async function createSampleData() {
-            const btn = document.getElementById('sample-data-button');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creating...';
-            try {
-                const sitesRef = collection(db, "sites");
-                await setDoc(doc(sitesRef, "Urbandale"), { completed: 2, passed: 2, failed: 0, remaining: 0, maintenance: 0 });
-                await setDoc(doc(sitesRef, "Warehouse A"), { completed: 3, passed: 2, failed: 1, remaining: 5, maintenance: 1 });
-                const inspectionsRef = collection(db, "inspections");
-                await addDoc(inspectionsRef, { assetId: "TRK-00152", location: "Urbandale", status: "Passed", date: serverTimestamp() });
-                await addDoc(inspectionsRef, { assetId: "TRK-00231", location: "Urbandale", status: "Passed", date: serverTimestamp() });
-                await addDoc(inspectionsRef, { assetId: "TRK-00489", location: "Warehouse A", status: "Failed", date: serverTimestamp() });
-                alert("Sample data created! The page will now reload.");
-                location.reload();
-            } catch (error) {
-                console.error("Error creating sample data: ", error);
-                alert("Failed to create sample data.");
-                btn.disabled = false;
-                btn.innerHTML = 'Generate Sample Data';
-            }
-        }
-        function displayEmptyState() {
-            dashboardContent.innerHTML = `<div class="text-center py-16"><i class="fas fa-box-open fa-4x text-gray-400"></i><h2 class="mt-4 text-2xl font-semibold">No Data Yet</h2><p class="mt-2 text-gray-500">Your dashboard is connected, but no inspection data has been found.</p><button id="sample-data-button" class="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Generate Sample Data</button></div>`;
-            document.getElementById('sample-data-button').onclick = createSampleData;
-        }
-        function displayErrorState(message) {
-            loadingSpinner.classList.add('hidden');
-            dashboardContent.innerHTML = `<div class="text-center py-16 bg-red-50 dark:bg-red-900/20 p-8 rounded-lg"><i class="fas fa-exclamation-triangle fa-4x text-red-500"></i><h2 class="mt-4 text-2xl font-semibold text-red-700 dark:text-red-300">An Error Occurred</h2><p class="mt-2 text-red-600 dark:text-red-400">${message}</p></div>`;
-        }
-        function displayDashboardContent() {
-            dashboardContent.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6"><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-gray-500 dark:text-gray-400">Total</h3><p id="total-stat" class="text-3xl font-bold mt-1">0</p></div><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-gray-500 dark:text-gray-400">Completed</h3><p id="completed-stat" class="text-3xl font-bold mt-1">0</p></div><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-green-500">Passed</h3><p id="passed-stat" class="text-3xl font-bold mt-1 text-green-500">0</p></div><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-red-500">Failed</h3><p id="failed-stat" class="text-3xl font-bold mt-1 text-red-500">0</p></div><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-yellow-500">Maintenance</h3><p id="maintenance-stat" class="text-3xl font-bold mt-1 text-yellow-500">0</p></div></div><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mt-8"><h3 class="text-xl font-semibold mb-4">Site Inspection Overview</h3><div class="h-80"><canvas id="site-overview-chart"></canvas></div></div>`;
-        }
-        function populateSiteSwitcher(sites) {
-            const dropdown = document.getElementById('site-switcher-dropdown');
-            const button = document.getElementById('site-switcher-button');
-            dropdown.innerHTML = '';
-            sites.forEach(site => {
-                const a = document.createElement('a');
-                a.href = '#';
-                a.textContent = site.id;
-                a.className = 'block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700';
-                a.onclick = (e) => { e.preventDefault(); updateDashboardUI(site); dropdown.classList.add('hidden'); };
-                dropdown.appendChild(a);
-            });
-            button.addEventListener('click', () => dropdown.classList.toggle('hidden'));
-        }
-        function updateDashboardUI(site) {
-            document.getElementById('current-site-name').textContent = site.id;
-            const total = (site.completed || 0) + (site.remaining || 0);
-            document.getElementById('total-stat').textContent = total;
-            document.getElementById('completed-stat').textContent = site.completed || 0;
-            document.getElementById('passed-stat').textContent = site.passed || 0;
-            document.getElementById('failed-stat').textContent = site.failed || 0;
-            document.getElementById('maintenance-stat').textContent = site.maintenance || 0;
-        }
-        function renderSiteChart(sites) {
-            const ctx = document.getElementById('site-overview-chart').getContext('2d');
-            if (siteChart) siteChart.destroy();
-            siteChart = new Chart(ctx, { type: 'bar', data: { labels: sites.map(s => s.id), datasets: [{ label: 'Completed', data: sites.map(s => s.completed || 0), backgroundColor: '#3b82f6' }, { label: 'Passed', data: sites.map(s => s.passed || 0), backgroundColor: '#22c55e' }, { label: 'Failed', data: sites.map(s => s.failed || 0), backgroundColor: '#ef4444' }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } } });
-        }
-        async function initialize() {
-            try {
-                await signInAnonymously(auth);
-                onSnapshot(collection(db, "sites"), (snapshot) => {
-                    loadingSpinner.classList.add('hidden');
-                    const sites = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                    if (sites.length === 0) { displayEmptyState(); return; }
-                    displayDashboardContent();
-                    populateSiteSwitcher(sites);
-                    updateDashboardUI(sites[0]);
-                    renderSiteChart(sites);
-                }, (error) => { displayErrorState("Could not fetch data. Check security rules."); });
-            } catch (error) { displayErrorState("Could not connect. Check Firebase setup."); }
-        }
-        window.onload = initialize;
+        let siteChart=null;
+        const loadingSpinner=document.getElementById("loading-spinner"),dashboardContent=document.getElementById("dashboard-content");async function createSampleData(){const e=document.getElementById("sample-data-button");e.disabled=!0,e.innerHTML='<i class="fas fa-spinner fa-spin mr-2"></i>Creating...';try{const t=collection(db,"sites");await setDoc(doc(t,"Urbandale"),{completed:2,passed:2,failed:0,remaining:0,maintenance:0}),await setDoc(doc(t,"Warehouse A"),{completed:3,passed:2,failed:1,remaining:5,maintenance:1});const n=collection(db,"inspections");await addDoc(n,{assetId:"TRK-00152",location:"Urbandale",status:"Passed",date:serverTimestamp()}),await addDoc(n,{assetId:"TRK-00231",location:"Urbandale",status:"Passed",date:serverTimestamp()}),await addDoc(n,{assetId:"TRK-00489",location:"Warehouse A",status:"Failed",date:serverTimestamp()}),alert("Sample data created! The page will now reload."),location.reload()}catch(t){console.error("Error creating sample data: ",t),alert("Failed to create sample data."),e.disabled=!1,e.innerHTML="Generate Sample Data"}}function displayEmptyState(){dashboardContent.innerHTML=`<div class="text-center py-16"><i class="fas fa-box-open fa-4x text-gray-400"></i><h2 class="mt-4 text-2xl font-semibold">No Data Yet</h2><p class="mt-2 text-gray-500">Your dashboard is connected, but no inspection data has been found.</p><button id="sample-data-button" class="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Generate Sample Data</button></div>`,document.getElementById("sample-data-button").onclick=createSampleData}function displayErrorState(e){loadingSpinner.classList.add("hidden"),dashboardContent.innerHTML=`<div class="text-center py-16 bg-red-50 dark:bg-red-900/20 p-8 rounded-lg"><i class="fas fa-exclamation-triangle fa-4x text-red-500"></i><h2 class="mt-4 text-2xl font-semibold text-red-700 dark:text-red-300">An Error Occurred</h2><p class="mt-2 text-red-600 dark:text-red-400">${e}</p></div>`}function displayDashboardContent(){dashboardContent.innerHTML=`<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6"><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-gray-500 dark:text-gray-400">Total</h3><p id="total-stat" class="text-3xl font-bold mt-1">0</p></div><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-gray-500 dark:text-gray-400">Completed</h3><p id="completed-stat" class="text-3xl font-bold mt-1">0</p></div><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-green-500">Passed</h3><p id="passed-stat" class="text-3xl font-bold mt-1 text-green-500">0</p></div><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-red-500">Failed</h3><p id="failed-stat" class="text-3xl font-bold mt-1 text-red-500">0</p></div><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-yellow-500">Maintenance</h3><p id="maintenance-stat" class="text-3xl font-bold mt-1 text-yellow-500">0</p></div></div><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mt-8"><h3 class="text-xl font-semibold mb-4">Site Inspection Overview</h3><div class="h-80"><canvas id="site-overview-chart"></canvas></div></div>`}function populateSiteSwitcher(e){const t=document.getElementById("site-switcher-dropdown"),n=document.getElementById("site-switcher-button");t.innerHTML="",e.forEach(e=>{const n=document.createElement("a");n.href="#",n.textContent=e.id,n.className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700",n.onclick=o=>{o.preventDefault(),updateDashboardUI(e),t.classList.add("hidden")},t.appendChild(n)}),n.addEventListener("click",()=>t.classList.toggle("hidden"))}function updateDashboardUI(e){document.getElementById("current-site-name").textContent=e.id;const t=(e.completed||0)+(e.remaining||0);document.getElementById("total-stat").textContent=t,document.getElementById("completed-stat").textContent=e.completed||0,document.getElementById("passed-stat").textContent=e.passed||0,document.getElementById("failed-stat").textContent=e.failed||0,document.getElementById("maintenance-stat").textContent=e.maintenance||0}function renderSiteChart(e){const t=document.getElementById("site-overview-chart").getContext("2d");siteChart&&siteChart.destroy(),siteChart=new Chart(t,{type:"bar",data:{labels:e.map(e=>e.id),datasets:[{label:"Completed",data:e.map(e=>e.completed||0),backgroundColor:"#3b82f6"},{label:"Passed",data:e.map(e=>e.passed||0),backgroundColor:"#22c55e"},{label:"Failed",data:e.map(e=>e.failed||0),backgroundColor:"#ef4444"}]},options:{responsive:!0,maintainAspectRatio:!1,scales:{y:{beginAtZero:!0}}}})}async function initialize(){try{await signInAnonymously(getAuth(app)),onSnapshot(collection(db,"sites"),e=>{loadingSpinner.classList.add("hidden");const t=e.docs.map(e=>({id:e.id,...e.data()}));if(0===t.length)return void displayEmptyState();displayDashboardContent(),populateSiteSwitcher(t),updateDashboardUI(t[0]),renderSiteChart(t)},e=>{displayErrorState("Could not fetch data. Check security rules.")})}catch(e){displayErrorState("Could not connect. Check Firebase setup.")}}window.onload=initialize;
     </script>
 </body>
 </html>
