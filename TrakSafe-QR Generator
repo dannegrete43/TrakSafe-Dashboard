@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrakSafe QR Code Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar-icon { width: 1.5rem; height: 1.5rem; }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white dark:bg-gray-800 flex-shrink-0">
+             <div class="h-full flex flex-col">
+                <div class="h-16 flex items-center justify-center border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center">
+                        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEBUSEhIVFRUVFRUVFRUVFRUVFRUVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OFQ8QFS0ZFR0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/ABEIAOEA4QMBIgACEQEDEQH/xAAcAAACAwEBAQEAAAAAAAAAAAADBAIFBgEHAAj/xABEEAACAQMCAwQGBwQJAwUAAAABAgADBBESIQUxQVEGEyJhcYEHkaGx0TJCUvAUIzNicnOCwTRDU2Oi4fFEY5Kz0uJ0wv/EABoBAAMBAQEBAAAAAAAAAAAAAAECAwAEBQb/xAAyEQACAgECBAQFAwUBAAAAAAABAgARAxIhBBMxQVEiMmFxkaEFFLHB0eHwFULxFTNi/9/aAAwDAQACEQMRAD8A8/ERERAEREBExEQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQ-PAA" class="h-10 w-auto" alt="TrakSafe Logo">
+                        <span class="ml-3 text-xl font-semibold">TrakSafe</span>
+                    </div>
+                </div>
+                <nav class="flex-1 px-2 py-4 space-y-1">
+                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span>
+                    </a>
+                    <a href="traksafe_inspections.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span>
+                    </a>
+                     <a href="traksafe_maintenance.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span>
+                    </a>
+                    <a href="traksafe_qr_generator.html" class="flex items-center px-4 py-2 text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-md">
+                        <i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span>
+                    </a>
+                    <a href="traksafe_reports.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span>
+                    </a>
+                </nav>
+                 <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-700">
+                     <a href="traksafe_settings.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span>
+                    </a>
+                     <a href="traksafe_login.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 p-6 md:p-10">
+            <h1 class="text-3xl font-bold mb-8">QR Code Generator</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Generator Controls -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div class="space-y-4">
+                        <div>
+                            <label for="asset-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select an Existing Asset</label>
+                            <select id="asset-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                                <option value="">Loading assets...</option>
+                            </select>
+                        </div>
+                        <div class="text-center text-sm text-gray-500 dark:text-gray-400">OR</div>
+                        <div>
+                            <label for="custom-id-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Enter a Custom Asset ID</label>
+                            <input type="text" id="custom-id-input" placeholder="e.g., TRK-NEW-001" class="mt-1 block w-full border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <button id="generate-qr-button" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Generate QR Code</button>
+                    </div>
+                </div>
+                <!-- QR Code Display -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow flex flex-col items-center justify-center">
+                    <div id="qrcode-container" class="w-64 h-64 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                        <span class="text-gray-500 dark:text-gray-400">QR Code will appear here</span>
+                    </div>
+                     <button id="download-button" class="hidden mt-6 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download PNG</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw",
+        authDomain: "inspectionapp2-88221.firebaseapp.com",
+        projectId: "inspectionapp2-88221",
+        storageBucket: "inspectionapp2-88221.appspot.com",
+        messagingSenderId: "805230972315",
+        appId: "1:805230972315:web:d00e2d1a1869aefee1653e",
+        measurementId: "G-WHXE1XECQF"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    const assetSelect = document.getElementById('asset-select');
+    const customIdInput = document.getElementById('custom-id-input');
+    const generateBtn = document.getElementById('generate-qr-button');
+    const downloadBtn = document.getElementById('download-button');
+    const qrContainer = document.getElementById('qrcode-container');
+    let currentQRData = '';
+
+    async function loadAssets() {
+        try {
+            await signInAnonymously(auth);
+            const inspectionsRef = collection(db, "inspections");
+            const snapshot = await getDocs(inspectionsRef);
+            
+            const assetIds = new Set();
+            snapshot.forEach(doc => {
+                assetIds.add(doc.data().assetId);
+            });
+            
+            assetSelect.innerHTML = '<option value="">-- Select an Asset --</option>';
+            Array.from(assetIds).sort().forEach(id => {
+                const option = document.createElement('option');
+                option.value = id;
+                option.textContent = id;
+                assetSelect.appendChild(option);
+            });
+
+        } catch (error) {
+            console.error("Error loading assets: ", error);
+            assetSelect.innerHTML = '<option value="">Could not load assets</option>';
+        }
+    }
+    
+    function generateQRCode() {
+        let dataToEncode = customIdInput.value.trim();
+        if (!dataToEncode) {
+            dataToEncode = assetSelect.value;
+        }
+
+        if (!dataToEncode) {
+            alert("Please select an asset or enter a custom ID.");
+            return;
+        }
+        
+        currentQRData = dataToEncode;
+        qrContainer.innerHTML = ''; // Clear previous QR code
+        QRCode.toCanvas(document.createElement('canvas'), dataToEncode, { width: 256, errorCorrectionLevel: 'H' }, function (error, canvas) {
+            if (error) console.error(error);
+            qrContainer.appendChild(canvas);
+            downloadBtn.classList.remove('hidden');
+        });
+    }
+
+    function downloadQRCode() {
+        const canvas = qrContainer.querySelector('canvas');
+        if (!canvas) {
+            alert('Please generate a QR code first.');
+            return;
+        }
+        const link = document.createElement('a');
+        link.download = `${currentQRData}_qrcode.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+
+    assetSelect.addEventListener('change', () => {
+        if (assetSelect.value) {
+            customIdInput.value = ''; // Clear custom input if an asset is selected
+        }
+    });
+    
+    customIdInput.addEventListener('input', () => {
+        if (customIdInput.value) {
+            assetSelect.value = ''; // Reset dropdown if typing a custom ID
+        }
+    });
+
+    generateBtn.addEventListener('click', generateQRCode);
+    downloadBtn.addEventListener('click', downloadQRCode);
+
+    window.onload = loadAssets;
+</script>
+</body>
+</html>
+
