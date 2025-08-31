@@ -99,7 +99,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getFirestore, collection, onSnapshot, doc, setDoc, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw",
@@ -119,6 +119,35 @@
     const loadingSpinner = document.getElementById('loading-spinner');
     const dashboardContent = document.getElementById('dashboard-content');
     const appContainer = document.getElementById('app-container');
+
+    async function createSampleData() {
+        const sampleButton = document.getElementById('sample-data-button');
+        sampleButton.disabled = true;
+        sampleButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creating Data...';
+
+        try {
+            // Create sites collection
+            const sitesRef = collection(db, "sites");
+            await setDoc(doc(sitesRef, "Urbandale"), { completed: 2, passed: 2, failed: 0, remaining: 0, maintenance: 0 });
+            await setDoc(doc(sitesRef, "Warehouse A"), { completed: 3, passed: 2, failed: 1, remaining: 5, maintenance: 1 });
+
+            // Create inspections collection
+            const inspectionsRef = collection(db, "inspections");
+            await addDoc(inspectionsRef, { assetId: "TRK-00152", location: "Urbandale", status: "Passed", date: serverTimestamp() });
+            await addDoc(inspectionsRef, { assetId: "TRK-00231", location: "Urbandale", status: "Passed", date: serverTimestamp() });
+            await addDoc(inspectionsRef, { assetId: "TRK-00489", location: "Warehouse A", status: "Failed", date: serverTimestamp() });
+            await addDoc(inspectionsRef, { assetId: "TRK-00105", location: "Warehouse A", status: "Passed", date: serverTimestamp() });
+            await addDoc(inspectionsRef, { assetId: "TRK-00332", location: "Warehouse A", status: "Passed", date: serverTimestamp() });
+
+            alert("Sample data created successfully! The page will now reload.");
+            location.reload();
+        } catch (error) {
+            console.error("Error creating sample data: ", error);
+            alert("Failed to create sample data. Please check the console for errors.");
+            sampleButton.disabled = false;
+            sampleButton.innerHTML = 'Generate Sample Data';
+        }
+    }
 
 
     async function initializeDashboard() {
@@ -147,24 +176,7 @@
             }
         } catch (error) {
             console.error("Authentication error: ", error);
-            if (error.code === 'auth/requests-from-referer') {
-                displayErrorState(`
-                    <h2 class="text-2xl font-semibold text-red-700 dark:text-red-300">Final Test: Remove API Key Restriction</h2>
-                    <p class="mt-2 text-red-600 dark:text-red-400">Let's temporarily remove all restrictions to confirm the dashboard is working.</p>
-                    <div class="text-left mt-4 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
-                        <strong class="text-gray-800 dark:text-gray-200">How to Fix (Temporarily):</strong><br>
-                        <ol class="list-decimal list-inside ml-4 mt-2">
-                            <li>Go to <strong>Google Cloud Console &rarr; APIs & Services &rarr; Credentials</strong>.</li>
-                            <li>Click on your API key (e.g., "Browser key...").</li>
-                            <li>Under "Application restrictions", select <strong>None</strong>.</li>
-                            <li>Click <strong>Save</strong> and then wait 2 minutes before refreshing this page.</li>
-                        </ol>
-                        <p class="mt-4 text-sm text-yellow-600 dark:text-yellow-400"><strong>Note:</strong> This is for testing only. We will re-secure the key after confirming it works.</p>
-                    </div>
-                `);
-            } else {
-                displayErrorState("Could not connect to the database. Please check your Firebase setup and enable Anonymous Authentication.");
-            }
+            displayErrorState("Could not connect to the database. Please check your Firebase setup and enable Anonymous Authentication.");
         }
     }
     
@@ -173,14 +185,17 @@
             <div class="text-center py-16">
                 <i class="fas fa-box-open fa-4x text-gray-400"></i>
                 <h2 class="mt-4 text-2xl font-semibold">No Data Yet</h2>
-                <p class="mt-2 text-gray-500">As soon as you add an inspection in the mobile app, your dashboard will come to life here.</p>
+                <p class="mt-2 text-gray-500">Your dashboard is connected, but no inspection data has been found.</p>
+                <button id="sample-data-button" class="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    Generate Sample Data
+                </button>
             </div>
         `;
+        document.getElementById('sample-data-button').onclick = createSampleData;
     }
     
     function displayErrorState(message) {
          loadingSpinner.classList.add('hidden');
-         // Hide the main app container and show a full-page error
          appContainer.innerHTML = `
             <div class="w-full h-full flex items-center justify-center p-4">
                 <div class="text-center bg-white dark:bg-gray-800 p-8 rounded-lg shadow-2xl max-w-2xl">
