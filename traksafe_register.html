@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - TrakSafe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center h-screen">
+    <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
+        <div class="flex flex-col items-center mb-6">
+            <img src="TrakSafe-Logo-Design.jpg" class="h-28 w-auto" alt="TrakSafe Logo">
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mt-2">Create Account</h1>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email Address</label>
+                <input type="email" id="email" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+                <input type="password" id="password" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div id="error-message" class="hidden text-red-500 text-sm"></div>
+            <button id="register-button" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Register
+            </button>
+        </div>
+        <p class="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+            Already have an account? 
+            <a href="index.html" class="font-medium text-indigo-600 hover:text-indigo-500">Sign in</a>
+        </p>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        const firebaseConfig = { apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw", authDomain: "inspectionapp2-88221.firebaseapp.com", projectId: "inspectionapp2-88221", storageBucket: "inspectionapp2-88221.appspot.com", messagingSenderId: "805230972315", appId: "1:805230972315:web:d00e2d1a1869aefee1653e", measurementId: "G-WHXE1XECQF" };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const registerButton = document.getElementById('register-button');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('error-message');
+
+        registerButton.addEventListener('click', () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            errorMessage.classList.add('hidden');
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    console.log("User registered successfully:", userCredential.user);
+                    window.location.href = 'index.html'; // Redirect to login page after successful registration
+                })
+                .catch((error) => {
+                    errorMessage.textContent = error.message;
+                    errorMessage.classList.remove('hidden');
+                    console.error("Registration error:", error);
+                });
+        });
+    </script>
+</body>
+</html>
+
