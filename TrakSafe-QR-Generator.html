@@ -3,51 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Generator</title>
-    
-    <link rel="stylesheet" href="style.css"> 
+    <title>TrakSafe - QR Code Generator</title>
+    <style>
+        /* CSS to match the layout of your screenshot */
+        :root {
+            --bg-primary: #12121c;
+            --bg-secondary: #1a1a2e;
+            --bg-content: #22223a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0b0;
+            --accent-blue: #007bff;
+            --border-color: #33334a;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .app-container {
+            display: flex;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            background-color: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            box-sizing: border-box;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .sidebar-nav {
+            flex-grow: 1;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            margin: 5px 10px;
+            border-radius: 6px;
+        }
+
+        .sidebar-nav a:hover {
+            background-color: var(--bg-content);
+            color: var(--text-primary);
+        }
+
+        .sidebar-nav a.active {
+            background-color: var(--accent-blue);
+            color: white;
+        }
+
+        .sidebar-footer {
+            padding: 0 10px;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            height: 100vh;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .main-header h2 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .content-card {
+            background-color: var(--bg-primary);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .input-section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        #qrInput {
+            flex-grow: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 6px;
+        }
+
+        #generateBtn {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: var(--accent-blue);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #qrcode {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
-    
-    <main>
-        <h1>QR Code Generator</h1>
-        <div class="input-section">
-            <input type="text" id="qrInput" placeholder="Enter text or URL">
-            <button id="generateBtn">Generate</button>
-        </div>
 
-        <div id="qrcode"></div>
-    </main>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="TrakSafe-Logo-Design.jpg" alt="Logo">
+                <h1>TrakSafe</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Inspections</a></li>
+                    <li><a href="#">Maintenance</a></li>
+                    <li><a href="#" class="active">QR Generator</a></li>
+                    <li><a href="#">Reports</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="#">Settings</a></li>
+                        <li><a href="#">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h2>QR Code Generator</h2>
+                <span>🌙</span> </header>
+
+            <div class="content-card">
+                <div class="input-section">
+                    <input type="text" id="qrInput" placeholder="Enter text or URL to generate QR code">
+                    <button id="generateBtn">Generate</button>
+                </div>
+                <div id="qrcode"></div>
+            </div>
+        </main>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-
     <script>
         const generateBtn = document.getElementById('generateBtn');
         const qrInput = document.getElementById('qrInput');
         const qrCodeContainer = document.getElementById('qrcode');
-        let qrcode = null; 
+        let qrcode = null;
 
         function generateQRCode() {
             const inputValue = qrInput.value.trim();
-
             if (inputValue) {
-                qrCodeContainer.innerHTML = ''; // Clear previous QR code
-
+                qrCodeContainer.innerHTML = ''; // Clear previous
                 qrcode = new QRCode(qrCodeContainer, {
                     text: inputValue,
-                    width: 256,
-                    height: 256,
-                    colorDark : "#000000",
-                    colorLight : "#ffffff",
-                    correctLevel : QRCode.CorrectLevel.H
+                    width: 150, // QR Code Size
+                    height: 150,
                 });
             } else {
                 alert("Please enter some text or a URL.");
             }
         }
-
         generateBtn.addEventListener('click', generateQRCode);
     </script>
-
 </body>
 </html>
