@@ -5,15 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrakSafe QR Code Generator</title>
     
-    <link rel="stylesheet" href="style.css"> 
-</head>
+    </head>
 <body>
 
-    <header class="page-header">
-        <img src="TrakSafe-Logo-Design.jpg" alt="TrakSafe Logo" class="header-logo">
-        <h1>QR Code Generator</h1>
-    </header>
+    <style>
+        /* These styles will ONLY apply to the logo header and its contents */
+        #traksafe-logo-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+        }
+        #traksafe-logo-header .logo-image {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+        #traksafe-logo-header .logo-title {
+            font-size: 24px; 
+            /* This will inherit your page's default font and color */
+            margin: 0;
+        }
+    </style>
 
+    <header id="traksafe-logo-header">
+        <img src="TrakSafe-Logo-Design.jpg" alt="TrakSafe Logo" class="logo-image">
+        <h1 class="logo-title">QR Code Generator</h1>
+    </header>
     <main>
         <div class="input-section">
             <input type="text" id="qrInput" placeholder="Enter text or URL">
@@ -29,19 +47,17 @@
         const generateBtn = document.getElementById('generateBtn');
         const qrInput = document.getElementById('qrInput');
         const qrCodeContainer = document.getElementById('qrcode');
-        let qrcode = null; // To hold the QR code instance
+        let qrcode = null; 
 
         function generateQRCode() {
             const inputValue = qrInput.value.trim();
 
             if (inputValue) {
-                // Clear previous QR code
-                qrCodeContainer.innerHTML = '';
+                qrCodeContainer.innerHTML = ''; // Clear previous QR code
 
-                // Create new QR code
                 qrcode = new QRCode(qrCodeContainer, {
                     text: inputValue,
-                    width: 256, // Size of the QR code image
+                    width: 256,
                     height: 256,
                     colorDark : "#000000",
                     colorLight : "#ffffff",
