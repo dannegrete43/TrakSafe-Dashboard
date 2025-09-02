@@ -1,153 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrakSafe - QR Code Generator</title>
-    <link rel="stylesheet" href="style.css"> 
-    <style>
-        /* Add any *specific* overrides or unique styles for this page here,
-           but generally, the main style.css should handle most of it.
-           For example, if #qrcode needs specific dimensions not covered by global styles. */
-        .qr-card-content {
-            display: flex;
-            flex-direction: column;
-            gap: 20px; /* Spacing between form groups and QR code */
-            align-items: flex-start; /* Align items to the left */
-        }
-
-        /* Basic styling for QR code container if not in your main style.css */
-        #qrcode {
-            background-color: white; /* QR code background is usually white */
-            padding: 15px;
-            border-radius: 8px;
-            display: inline-block; /* Makes background fit QR code */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
-        }
-
-        /* Styling for form elements if not fully covered by your style.css */
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--text-secondary, #a0a0b0); /* Use CSS variable if defined, else fallback */
-        }
-
-        .form-group select,
-        .form-group input[type="text"] {
-            width: 100%; /* Or set a max-width if preferred */
-            padding: 12px;
-            font-size: 16px;
-            border: 1px solid var(--border-color, #33334a);
-            background-color: var(--bg-secondary, #1a1a2e);
-            color: var(--text-primary, #e0e0e0);
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-
-        button#generateBtn {
-            padding: 12px 25px;
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
-            background-color: var(--accent-blue, #007bff);
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        button#generateBtn:hover {
-            background-color: #0056b3; /* Darker blue on hover */
-        }
+    <title>TrakSafe QR Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style> 
+        body { font-family: 'Inter', sans-serif; } 
+        .sidebar-icon { width: 1.5rem; height: 1.5rem; } 
     </style>
+    <script> 
+        function toggleTheme() { 
+            document.documentElement.classList.toggle('dark'); 
+        } 
+    </script>
 </head>
-<body>
-
-    <div class="app-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <img src="TrakSafe-Logo-Design.jpg" alt="TrakSafe Logo">
-                <h1>TrakSafe</h1>
-            </div>
-            <nav class="sidebar-nav">
-                 <ul>
-                    <li><a href="TrakSafe-Dashboard.html">Dashboard</a></li>
-                    <li><a href="TrakSafe-Inspections.html">Inspections</a></li>
-                    <li><a href="TrakSafe-Maintenance.html">Maintenance</a></li>
-                    <li><a href="QR_Code_generator.html" class="active">QR Generator</a></li>
-                    <li><a href="TrakSafe-Reports.html">Reports</a></li>
-                </ul>
-            </nav>
-            <div class="sidebar-footer">
-                <nav class="sidebar-nav">
-                    <ul>
-                        <li><a href="TrakSafe-Settings.html">Settings</a></li>
-                        <li><a href="TrakSafe-Logout.html">Logout</a></li>
-                    </ul>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white dark:bg-gray-800 flex-shrink-0">
+            <div class="h-full flex flex-col">
+                <div class="h-16 flex items-center justify-center border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center">
+                        <img src="TrakSafe-Logo-Design.jpg" class="h-10 w-auto" alt="TrakSafe Logo">
+                        <span class="ml-3 text-xl font-semibold">TrakSafe</span>
+                    </div>
+                </div>
+                <nav class="flex-1 px-2 py-4 space-y-1">
+                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span>
+                    </a>
+                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span>
+                    </a>
+                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span>
+                    </a>
+                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span>
+                    </a>
+                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span>
+                    </a>
                 </nav>
-            </div>
-        </aside>
-        <main class="main-content">
-            <header class="main-header">
-                <h2>QR Code Generator</h2>
-                <span>Urbansdale 🌙</span> 
-            </header>
-
-            <div class="content-card">
-                <div class="qr-card-content">
-                    <div class="form-group" style="width: 100%;">
-                        <label for="extinguisherIdSelect">Select Extinguisher ID</label>
-                        <select id="extinguisherIdSelect">
-                            <option value="">-- Select an ID --</option>
-                            <option value="EXT-001-URB">EXT-001-URB</option>
-                            <option value="EXT-002-URB">EXT-002-URB</option>
-                            <option value="EXT-003-WH-A">EXT-003-WH-A</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group" style="width: 100%;">
-                        <label for="qrInput">Text to Encode (from selected ID)</label>
-                        <input type="text" id="qrInput" placeholder="Select an ID from the dropdown" readonly>
-                    </div>
-
-                    <button id="generateBtn">Generate QR Code</button>
-
-                    <div id="qrcode"></div>
+                <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-700">
+                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span>
+                    </a>
+                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                        <i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span>
+                    </a>
                 </div>
             </div>
+        </aside>
+
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto">
+            <header class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-bold">QR Code Generator</h1>
+                <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </header>
+
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow space-y-6">
+                <div>
+                    <label for="extinguisherIdSelect" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Select Extinguisher ID</label>
+                    <select id="extinguisherIdSelect" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </select>
+                </div>
+
+                <button id="generateBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    Generate QR Code
+                </button>
+
+                <div id="qrcode-container" class="mt-4">
+                    </div>
+            </div>
         </main>
-        </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-    <script>
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // Your Firebase configuration
+        const firebaseConfig = { apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw", authDomain: "inspectionapp2-88221.firebaseapp.com", projectId: "inspectionapp2-88221", storageBucket: "inspectionapp2-88221.appspot.com", messagingSenderId: "805230972315", appId: "1:805230972315:web:d00e2d1a1869aefee1653e", measurementId: "G-WHXE1XECQF" };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Get HTML elements
         const idSelect = document.getElementById('extinguisherIdSelect');
-        const qrInput = document.getElementById('qrInput');
         const generateBtn = document.getElementById('generateBtn');
-        const qrCodeContainer = document.getElementById('qrcode');
-        let qrcode = null; // To hold the QR code instance
+        const qrCodeContainer = document.getElementById('qrcode-container');
 
-        // Automatically update the input field when an ID is selected
-        idSelect.addEventListener('change', () => {
-            qrInput.value = idSelect.value;
-        });
-
-        function generateQRCode() {
-            const inputValue = qrInput.value.trim();
-            if (inputValue) {
-                qrCodeContainer.innerHTML = ''; // Clear previous QR code
-                qrcode = new QRCode(qrCodeContainer, {
-                    text: inputValue,
-                    width: 150, // QR Code size
-                    height: 150,
-                    colorDark : "#000000",
-                    colorLight : "#ffffff",
-                    correctLevel : QRCode.CorrectLevel.H
+        // Function to populate the dropdown
+        async function populateDropdown() {
+            try {
+                await signInAnonymously(getAuth(app));
+                onSnapshot(collection(db, "inspections"), (snapshot) => {
+                    idSelect.innerHTML = '<option value="">-- Select an ID --</option>'; // Clear existing options
+                    const assetIds = new Set(); // Use a Set to store unique asset IDs
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        if (data.assetId) {
+                            assetIds.add(data.assetId);
+                        }
+                    });
+                    // Sort and add unique IDs to the dropdown
+                    [...assetIds].sort().forEach(assetId => {
+                        const option = document.createElement('option');
+                        option.value = assetId;
+                        option.textContent = assetId;
+                        idSelect.appendChild(option);
+                    });
                 });
+            } catch (e) {
+                console.error("Error populating dropdown: ", e);
+            }
+        }
+        
+        // Function to generate the QR code
+        function generateQRCode() {
+            const selectedValue = idSelect.value;
+            qrCodeContainer.innerHTML = ''; // Clear previous QR code
+            
+            if (selectedValue) {
+                // We need to load the qrcode.js library to use it
+                const qrScript = document.createElement('script');
+                qrScript.src = 'https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js';
+                qrScript.onload = () => {
+                    new QRCode(qrCodeContainer, {
+                        text: selectedValue,
+                        width: 128,
+                        height: 128
+                    });
+                };
+                document.head.appendChild(qrScript);
             } else {
                 alert("Please select an ID from the dropdown first.");
             }
         }
+
+        // Add event listener to the button
         generateBtn.addEventListener('click', generateQRCode);
+
+        // Populate the dropdown when the page loads
+        window.onload = populateDropdown;
     </script>
 </body>
 </html>
