@@ -119,20 +119,26 @@
             border: 1px solid var(--border-color);
         }
         
-        .input-section {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        #qrInput {
-            flex-grow: 1;
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--text-secondary);
+        }
+
+        .form-group select, .form-group input {
+            width: 100%;
             padding: 12px;
             font-size: 16px;
             border: 1px solid var(--border-color);
             background-color: var(--bg-secondary);
             color: var(--text-primary);
             border-radius: 6px;
+            box-sizing: border-box;
         }
 
         #generateBtn {
@@ -147,6 +153,7 @@
         }
 
         #qrcode {
+            margin-top: 20px;
             background-color: white;
             padding: 15px;
             border-radius: 8px;
@@ -163,12 +170,12 @@
                 <h1>TrakSafe</h1>
             </div>
             <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Inspections</a></li>
-                    <li><a href="#">Maintenance</a></li>
-                    <li><a href="#" class="active">QR Generator</a></li>
-                    <li><a href="#">Reports</a></li>
+                 <ul>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="inspections.html">Inspections</a></li>
+                    <li><a href="maintenance.html">Maintenance</a></li>
+                    <li><a href="QR_Code_generator.html" class="active">QR Generator</a></li>
+                    <li><a href="reports.html">Reports</a></li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -187,10 +194,24 @@
                 <span>🌙</span> </header>
 
             <div class="content-card">
-                <div class="input-section">
-                    <input type="text" id="qrInput" placeholder="Enter text or URL to generate QR code">
-                    <button id="generateBtn">Generate</button>
+                
+                <div class="form-group">
+                    <label for="extinguisherIdSelect">Select Extinguisher ID</label>
+                    <select id="extinguisherIdSelect">
+                        <option value="">-- Select an ID --</option>
+                        <option value="EXT-001-URB">EXT-001-URB</option>
+                        <option value="EXT-002-URB">EXT-002-URB</option>
+                        <option value="EXT-003-WH-A">EXT-003-WH-A</option>
+                    </select>
                 </div>
+                
+                <div class="form-group">
+                    <label for="qrInput">Text to Encode</label>
+                    <input type="text" id="qrInput" placeholder="Select an ID from the dropdown" readonly>
+                </div>
+
+                <button id="generateBtn">Generate QR Code</button>
+
                 <div id="qrcode"></div>
             </div>
         </main>
@@ -198,10 +219,16 @@
 
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
-        const generateBtn = document.getElementById('generateBtn');
+        const idSelect = document.getElementById('extinguisherIdSelect');
         const qrInput = document.getElementById('qrInput');
+        const generateBtn = document.getElementById('generateBtn');
         const qrCodeContainer = document.getElementById('qrcode');
         let qrcode = null;
+
+        // Update the input box when a dropdown option is selected
+        idSelect.addEventListener('change', () => {
+            qrInput.value = idSelect.value;
+        });
 
         function generateQRCode() {
             const inputValue = qrInput.value.trim();
@@ -213,7 +240,7 @@
                     height: 150,
                 });
             } else {
-                alert("Please enter some text or a URL.");
+                alert("Please select an ID from the dropdown first.");
             }
         }
         generateBtn.addEventListener('click', generateQRCode);
