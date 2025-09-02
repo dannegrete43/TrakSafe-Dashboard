@@ -1,98 +1,134 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrakSafe QR Generator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator/qrcode.js"></script>
-    <style> body { font-family: 'Inter', sans-serif; } .sidebar-icon { width: 1.5rem; height: 1.5rem; } #qrcode canvas { width: 100% !important; height: auto !important; } </style>
-    <script> function toggleTheme() { document.documentElement.classList.toggle('dark'); } </script>
+    <title>TrakSafe QR Code Generator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        /* Header Styling */
+        .app-header {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .header-logo {
+            width: 50px; /* Adjust logo size */
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .app-header h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        /* Main Content Styling */
+        main {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #2a2a3e;
+            border-radius: 8px;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #qrInput {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        #generateBtn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50; /* Green button */
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #qrcode {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            display: inline-block; /* Ensures the background fits the QR code */
+        }
+    </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
-    <div class="flex h-screen">
-        <aside class="w-64 bg-white dark:bg-gray-800 flex-shrink-0">
-            <div class="h-full flex flex-col">
-                <div class="h-16 flex items-center justify-center border-b border-gray-200 dark:border-gray-700">
-                    <div class="flex items-center">
-                        <img src="TrakSafe-Logo-Design.jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEBUSEhIVFRUVFRUVFRUVFRUVFRUVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OFQ8QFS0ZFR0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAcAAACAwEBAQEAAAAAAAAAAAADBAIFBgEHAAj/xABEEAACAQMCAwQGBwQJAwUAAAABAgADBBESIQUxQVEGEyJhcYEHkaGx0TJCUvAUIzNicnOCwTRDU2Oi4fFEY5Kz0uJ0wv/EABoBAAMBAQEBAAAAAAAAAAAAAAECAwAEBQb/xAAyEQACAgECBAQFAwUBAAAAAAABAgARAxIhBBMxQVEiMmFxkaEFFLHB0eHwFULxFTNi/9/aAAwDAQACEQMRAD8A8/ERERAEREBExEQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQBERAREQ-PAA" class="h-10 w-auto" alt="TrakSafe Logo">
-                        <span class="ml-3 text-xl font-semibold">TrakSafe</span>
-                    </div>
-                </div>
-                <nav class="flex-1 px-2 py-4 space-y-1">
-                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
-                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
-                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
-                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
-                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
-                </nav>
-                <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-700">
-                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span></a>
-                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span></a>
-                </div>
-            </div>
-        </aside>
-        <main class="flex-1 p-6 md:p-10 overflow-y-auto">
-            <header class="flex justify-between items-center mb-8"><h1 class="text-3xl font-bold">QR Code Generator</h1><button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"><i class="fa-solid fa-moon"></i></button></header>
-            <div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
-                <div class="space-y-4">
-                    <div><label for="asset-select" class="block text-sm font-medium">Select an Existing Asset</label><select id="asset-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600"></select></div>
-                    <div class="relative flex items-center"><div class="flex-grow border-t border-gray-300 dark:border-gray-600"></div><span class="flex-shrink mx-4 text-gray-500">OR</span><div class="flex-grow border-t border-gray-300 dark:border-gray-600"></div></div>
-                    <div><label for="custom-id-input" class="block text-sm font-medium">Enter a Custom ID</label><input type="text" id="custom-id-input" placeholder="e.g., TRK-NEW-001" class="mt-1 block w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"></div>
-                </div>
-                <div id="qrcode-container" class="mt-8 flex flex-col items-center justify-center h-64 w-64 mx-auto bg-gray-100 dark:bg-gray-700 rounded-lg"><p id="qrcode-placeholder" class="text-gray-500">QR code will appear here</p><div id="qrcode" class="p-4"></div></div>
-                <button id="download-btn" class="mt-6 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded disabled:bg-gray-400" disabled>Download QR Code</button>
-            </div>
-        </main>
-    </div>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        const firebaseConfig = { apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw", authDomain: "inspectionapp2-88221.firebaseapp.com", projectId: "inspectionapp2-88221", storageBucket: "inspectionapp2-88221.appspot.com", messagingSenderId: "805230972315", appId: "1:805230972315:web:d00e2d1a1869aefee1653e", measurementId: "G-WHXE1XECQF" };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const assetSelect = document.getElementById('asset-select'), customIdInput = document.getElementById('custom-id-input'), qrcodeContainer = document.getElementById('qrcode'), placeholder = document.getElementById('qrcode-placeholder'), downloadBtn = document.getElementById('download-btn');
-        let currentQRData = '';
-        function generateQRCode(text) {
-            if (!text) { qrcodeContainer.innerHTML = ''; placeholder.classList.remove('hidden'); downloadBtn.disabled = true; return; }
-            qrcodeContainer.innerHTML = ''; placeholder.classList.add('hidden'); downloadBtn.disabled = false; currentQRData = text;
-            const qr = qrcode(0, 'M');
-            qr.addData(text);
-            qr.make();
-            qrcodeContainer.innerHTML = qr.createImgTag(8, 8);
-        }
-        async function initialize() {
-            try {
-                await signInAnonymously(getAuth(app));
-                onSnapshot(collection(db, "inspections"), (snapshot) => {
-                    const assetIds = new Set(snapshot.docs.map(doc => doc.data().assetId).filter(Boolean));
-                    assetSelect.innerHTML = '<option value="">Select Asset...</option>';
-                    assetIds.forEach(id => assetSelect.innerHTML += `<option value="${id}">${id}</option>`);
+<body>
+
+    <header class="app-header">
+        <img src="TrakSafe-Logo-Design.jpg" alt="TrakSafe Logo" class="header-logo">
+        <h1>QR Code Generator</h1>
+    </header>
+
+    <main>
+        <div class="input-section">
+            <input type="text" id="qrInput" placeholder="Enter text or URL">
+            <button id="generateBtn">Generate</button>
+        </div>
+
+        <div id="qrcode"></div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+    <script>
+        const generateBtn = document.getElementById('generateBtn');
+        const qrInput = document.getElementById('qrInput');
+        const qrCodeContainer = document.getElementById('qrcode');
+        let qrcode = null; // To hold the QR code instance
+
+        function generateQRCode() {
+            const inputValue = qrInput.value.trim();
+
+            if (inputValue) {
+                // Clear previous QR code
+                qrCodeContainer.innerHTML = '';
+
+                // Create new QR code
+                qrcode = new QRCode(qrCodeContainer, {
+                    text: inputValue,
+                    width: 256, // Size of the QR code image
+                    height: 256,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
                 });
-            } catch (error) { console.error("Auth error:", error); }
-        }
-        assetSelect.addEventListener('change', () => { customIdInput.value = ''; generateQRCode(assetSelect.value); });
-        customIdInput.addEventListener('input', () => { assetSelect.value = ''; generateQRCode(customIdInput.value); });
-        downloadBtn.addEventListener('click', () => {
-            const canvas = qrcodeContainer.querySelector('canvas');
-            if(canvas){
-                const link = document.createElement('a');
-                link.download = `${currentQRData}.png`;
-                link.href = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
-                link.click();
-            } else { // Fallback for img tag
-                 const img = qrcodeContainer.querySelector('img');
-                 const link = document.createElement('a');
-                 link.href = img.src;
-                 link.download = `${currentQRData}.png`;
-                 link.click();
+            } else {
+                alert("Please enter some text or a URL.");
             }
-        });
-        window.onload = initialize;
+        }
+
+        generateBtn.addEventListener('click', generateQRCode);
     </script>
+
 </body>
 </html>
-
