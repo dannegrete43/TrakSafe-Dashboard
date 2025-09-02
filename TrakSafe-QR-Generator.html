@@ -4,160 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrakSafe - QR Code Generator</title>
+    <link rel="stylesheet" href="style.css"> 
     <style>
-        /* CSS to match the layout of your screenshot */
-        :root {
-            --bg-primary: #12121c;
-            --bg-secondary: #1a1a2e;
-            --bg-content: #22223a;
-            --text-primary: #e0e0e0;
-            --text-secondary: #a0a0b0;
-            --accent-blue: #007bff;
-            --border-color: #33334a;
-        }
-
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-secondary);
-            color: var(--text-primary);
-        }
-
-        .app-container {
-            display: flex;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
-            width: 240px;
-            height: 100vh;
-            background-color: var(--bg-primary);
+        /* Add any *specific* overrides or unique styles for this page here,
+           but generally, the main style.css should handle most of it.
+           For example, if #qrcode needs specific dimensions not covered by global styles. */
+        .qr-card-content {
             display: flex;
             flex-direction: column;
-            padding: 20px 0;
-            box-sizing: border-box;
-            border-right: 1px solid var(--border-color);
+            gap: 20px; /* Spacing between form groups and QR code */
+            align-items: flex-start; /* Align items to the left */
         }
 
-        .sidebar-header {
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            margin-bottom: 30px;
-        }
-
-        .sidebar-header img {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        .sidebar-header h1 {
-            font-size: 24px;
-            margin: 0;
-        }
-
-        .sidebar-nav {
-            flex-grow: 1;
-        }
-
-        .sidebar-nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .sidebar-nav a {
-            display: block;
-            padding: 12px 20px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            margin: 5px 10px;
-            border-radius: 6px;
-        }
-
-        .sidebar-nav a:hover {
-            background-color: var(--bg-content);
-            color: var(--text-primary);
-        }
-
-        .sidebar-nav a.active {
-            background-color: var(--accent-blue);
-            color: white;
-        }
-
-        .sidebar-footer {
-            padding: 0 10px;
-        }
-
-        /* Main Content Styling */
-        .main-content {
-            flex-grow: 1;
-            padding: 30px;
-            height: 100vh;
-            overflow-y: auto;
-            box-sizing: border-box;
-        }
-
-        .main-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .main-header h2 {
-            font-size: 28px;
-            margin: 0;
-        }
-
-        .content-card {
-            background-color: var(--bg-primary);
-            padding: 25px;
+        /* Basic styling for QR code container if not in your main style.css */
+        #qrcode {
+            background-color: white; /* QR code background is usually white */
+            padding: 15px;
             border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
+            display: inline-block; /* Makes background fit QR code */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
         }
 
+        /* Styling for form elements if not fully covered by your style.css */
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
-            color: var(--text-secondary);
+            color: var(--text-secondary, #a0a0b0); /* Use CSS variable if defined, else fallback */
         }
 
-        .form-group select, .form-group input {
-            width: 100%;
+        .form-group select,
+        .form-group input[type="text"] {
+            width: 100%; /* Or set a max-width if preferred */
             padding: 12px;
             font-size: 16px;
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-secondary);
-            color: var(--text-primary);
+            border: 1px solid var(--border-color, #33334a);
+            background-color: var(--bg-secondary, #1a1a2e);
+            color: var(--text-primary, #e0e0e0);
             border-radius: 6px;
             box-sizing: border-box;
         }
 
-        #generateBtn {
+        button#generateBtn {
             padding: 12px 25px;
             font-size: 16px;
             font-weight: bold;
             color: white;
-            background-color: var(--accent-blue);
+            background-color: var(--accent-blue, #007bff);
             border: none;
             border-radius: 6px;
             cursor: pointer;
+            transition: background-color 0.2s ease;
         }
-
-        #qrcode {
-            margin-top: 20px;
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            display: inline-block;
+        button#generateBtn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
         }
     </style>
 </head>
@@ -166,7 +66,7 @@
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <img src="TrakSafe-Logo-Design.jpg" alt="Logo">
+                <img src="TrakSafe-Logo-Design.jpg" alt="TrakSafe Logo">
                 <h1>TrakSafe</h1>
             </div>
             <nav class="sidebar-nav">
@@ -181,41 +81,42 @@
             <div class="sidebar-footer">
                 <nav class="sidebar-nav">
                     <ul>
-                        <li><a href="#">Settings</a></li>
-                        <li><a href="#">Logout</a></li>
+                        <li><a href="TrakSafe-Settings.html">Settings</a></li>
+                        <li><a href="TrakSafe-Logout.html">Logout</a></li>
                     </ul>
                 </nav>
             </div>
         </aside>
-
         <main class="main-content">
             <header class="main-header">
                 <h2>QR Code Generator</h2>
-                <span>🌙</span> </header>
+                <span>Urbansdale 🌙</span> 
+            </header>
 
             <div class="content-card">
-                
-                <div class="form-group">
-                    <label for="extinguisherIdSelect">Select Extinguisher ID</label>
-                    <select id="extinguisherIdSelect">
-                        <option value="">-- Select an ID --</option>
-                        <option value="EXT-001-URB">EXT-001-URB</option>
-                        <option value="EXT-002-URB">EXT-002-URB</option>
-                        <option value="EXT-003-WH-A">EXT-003-WH-A</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="qrInput">Text to Encode</label>
-                    <input type="text" id="qrInput" placeholder="Select an ID from the dropdown" readonly>
-                </div>
+                <div class="qr-card-content">
+                    <div class="form-group" style="width: 100%;">
+                        <label for="extinguisherIdSelect">Select Extinguisher ID</label>
+                        <select id="extinguisherIdSelect">
+                            <option value="">-- Select an ID --</option>
+                            <option value="EXT-001-URB">EXT-001-URB</option>
+                            <option value="EXT-002-URB">EXT-002-URB</option>
+                            <option value="EXT-003-WH-A">EXT-003-WH-A</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" style="width: 100%;">
+                        <label for="qrInput">Text to Encode (from selected ID)</label>
+                        <input type="text" id="qrInput" placeholder="Select an ID from the dropdown" readonly>
+                    </div>
 
-                <button id="generateBtn">Generate QR Code</button>
+                    <button id="generateBtn">Generate QR Code</button>
 
-                <div id="qrcode"></div>
+                    <div id="qrcode"></div>
+                </div>
             </div>
         </main>
-    </div>
+        </div>
 
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
@@ -223,9 +124,9 @@
         const qrInput = document.getElementById('qrInput');
         const generateBtn = document.getElementById('generateBtn');
         const qrCodeContainer = document.getElementById('qrcode');
-        let qrcode = null;
+        let qrcode = null; // To hold the QR code instance
 
-        // Update the input box when a dropdown option is selected
+        // Automatically update the input field when an ID is selected
         idSelect.addEventListener('change', () => {
             qrInput.value = idSelect.value;
         });
@@ -233,11 +134,14 @@
         function generateQRCode() {
             const inputValue = qrInput.value.trim();
             if (inputValue) {
-                qrCodeContainer.innerHTML = ''; // Clear previous
+                qrCodeContainer.innerHTML = ''; // Clear previous QR code
                 qrcode = new QRCode(qrCodeContainer, {
                     text: inputValue,
-                    width: 150, // QR Code Size
+                    width: 150, // QR Code size
                     height: 150,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
                 });
             } else {
                 alert("Please select an ID from the dropdown first.");
