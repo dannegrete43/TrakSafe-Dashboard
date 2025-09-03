@@ -72,7 +72,7 @@
             const searchTerm = searchInput.value.toLowerCase();
             const statusValue = statusFilter.value;
             
-            const filtered = allInspections.filter(insp => {
+            const Firebase = allInspections.filter(insp => {
                 // Determine the status from the boolean fields
                 const isFailed = insp.extinguisherChanged === true || 
                                  insp.nozzleObstructed === true || 
