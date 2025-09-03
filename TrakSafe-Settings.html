@@ -12,62 +12,49 @@
         .sidebar-icon { width: 1.5rem; height: 1.5rem; } 
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
+<body class="bg-gray-100 text-gray-900">
     <div class="flex h-screen">
-        <aside class="w-64 bg-white dark:bg-gray-800 flex-shrink-0">
+        <aside class="w-64 bg-white flex-shrink-0">
             <div class="h-full flex flex-col">
-                <div class="h-16 flex items-center justify-center border-b border-gray-200 dark:border-gray-700">
+                <div class="h-16 flex items-center justify-center border-b border-gray-200">
                     <div class="flex items-center">
                         <img src="TrakSafe-Logo-Design.jpg" class="h-10 w-auto" alt="TrakSafe Logo">
                         <span class="ml-3 text-xl font-semibold">TrakSafe</span>
                     </div>
                 </div>
                 <nav class="flex-1 px-2 py-4 space-y-1">
-                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
-                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
-                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
-                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
-                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
+                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
+                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
+                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
+                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
+                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
                 </nav>
-                <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-700">
-                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md"><i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span></a>
-                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span></a>
+                <div class="mt-auto p-4 border-t border-gray-200">
+                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 bg-gray-100 rounded-md"><i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span></a>
+                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span></a>
                 </div>
             </div>
         </aside>
         <main class="flex-1 p-6 md:p-10 overflow-y-auto">
             <header class="flex justify-between items-center mb-8">
                 <h1 class="text-3xl font-bold">Settings</h1>
-                <button id="theme-toggle-header" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
             </header>
             <div class="max-w-2xl mx-auto space-y-8">
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white rounded-lg shadow p-6">
                     <h2 class="text-xl font-semibold mb-4">User Profile</h2>
                     <div class="flex items-center space-x-4">
-                        <div class="w-16 h-16 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                        <div class="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center">
                             <i class="fa-solid fa-user fa-2x text-gray-500"></i>
                         </div>
                         <div>
                             <p id="user-id" class="font-medium text-sm break-all">Loading user...</p>
-                            <p id="user-status" class="text-sm text-gray-500 dark:text-gray-400">Not signed in</p>
+                            <p id="user-status" class="text-sm text-gray-500">Not signed in</p>
                         </div>
-                    </div>
-                </div>
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                    <h2 class="text-xl font-semibold mb-4">Application Settings</h2>
-                    <div class="flex items-center justify-between">
-                        <span class="text-gray-700 dark:text-gray-300">Theme</span>
-                        <button id="theme-toggle-main" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">
-                            Toggle Dark/Light Mode
-                        </button>
                     </div>
                 </div>
             </div>
         </main>
     </div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -89,39 +76,6 @@
         });
 
         signInAnonymously(auth).catch(e => console.error(e));
-    </script>
-    
-    <script>
-        // --- THEME TOGGLE LOGIC ---
-        const themeToggleHeader = document.getElementById('theme-toggle-header');
-        const themeToggleMain = document.getElementById('theme-toggle-main');
-        const htmlEl = document.documentElement;
-
-        // Function to toggle the theme
-        function toggleTheme() {
-            htmlEl.classList.toggle('dark');
-            // Save the user's preference in localStorage
-            if (htmlEl.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Attach event listeners to both buttons
-        themeToggleHeader.addEventListener('click', toggleTheme);
-        themeToggleMain.addEventListener('click', toggleTheme);
-        
-        // --- INITIAL THEME SET ---
-        // On page load, check for saved theme in localStorage or user's OS preference
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            htmlEl.classList.add('dark');
-        } else {
-            htmlEl.classList.remove('dark');
-        }
     </script>
 </body>
 </html>
