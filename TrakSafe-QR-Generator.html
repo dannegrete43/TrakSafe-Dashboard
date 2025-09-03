@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,80 +11,49 @@
         body { font-family: 'Inter', sans-serif; } 
         .sidebar-icon { width: 1.5rem; height: 1.5rem; } 
     </style>
-    <script> 
-        function toggleTheme() { 
-            document.documentElement.classList.toggle('dark'); 
-        } 
-    </script>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
+<body class="bg-gray-100 text-gray-900">
     <div class="flex h-screen">
-        <aside class="w-64 bg-white dark:bg-gray-800 flex-shrink-0">
+        <aside class="w-64 bg-white flex-shrink-0">
             <div class="h-full flex flex-col">
-                <div class="h-16 flex items-center justify-center border-b border-gray-200 dark:border-gray-700">
+                <div class="h-16 flex items-center justify-center border-b border-gray-200">
                     <div class="flex items-center">
                         <img src="TrakSafe-Logo-Design.jpg" class="h-10 w-auto" alt="TrakSafe Logo">
                         <span class="ml-3 text-xl font-semibold">TrakSafe</span>
                     </div>
                 </div>
                 <nav class="flex-1 px-2 py-4 space-y-1">
-                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span>
-                    </a>
-                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span>
-                    </a>
-                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span>
-                    </a>
-                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span>
-                    </a>
-                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span>
-                    </a>
+                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
+                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
+                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
+                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 bg-gray-100 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
+                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
                 </nav>
-                <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-700">
-                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span>
-                    </a>
-                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span>
-                    </a>
+                <div class="mt-auto p-4 border-t border-gray-200">
+                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span></a>
+                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span></a>
                 </div>
             </div>
         </aside>
-
         <main class="flex-1 p-6 md:p-10 overflow-y-auto">
             <header class="flex justify-between items-center mb-8">
                 <h1 class="text-3xl font-bold">QR Code Generator</h1>
-                <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
             </header>
-
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow space-y-6">
+            <div class="bg-white p-6 rounded-lg shadow space-y-6">
                 <div>
-                    <label for="extinguisherIdSelect" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Select Extinguisher ID</label>
-                    <select id="extinguisherIdSelect" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                        </select>
+                    <label for="extinguisherIdSelect" class="block mb-2 text-sm font-medium text-gray-700">Select Extinguisher ID</label>
+                    <select id="extinguisherIdSelect" class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    </select>
                 </div>
-
                 <div class="flex items-center space-x-4">
-                    <button id="generateBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-                        Generate QR Code
-                    </button>
-                    <button id="downloadBtn" class="hidden bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-                        Download as JPG
-                    </button>
+                    <button id="generateBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Generate QR Code</button>
+                    <button id="downloadBtn" class="hidden bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Download as JPG</button>
                 </div>
-
                 <div id="qrcode-container" class="mt-4 bg-white p-4 inline-block rounded-lg">
-                    </div>
+                </div>
             </div>
         </main>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -92,13 +61,12 @@
         import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         
         const firebaseConfig = { apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw", authDomain: "inspectionapp2-88221.firebaseapp.com", projectId: "inspectionapp2-88221", storageBucket: "inspectionapp2-88221.appspot.com", messagingSenderId: "805230972315", appId: "1:805230972315:web:d00e2d1a1869aefee1653e", measurementId: "G-WHXE1XECQF" };
-        
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-
+        
         const idSelect = document.getElementById('extinguisherIdSelect');
         const generateBtn = document.getElementById('generateBtn');
-        const downloadBtn = document.getElementById('downloadBtn'); // ** NEW **
+        const downloadBtn = document.getElementById('downloadBtn');
         const qrCodeContainer = document.getElementById('qrcode-container');
 
         async function populateDropdown() {
@@ -124,7 +92,7 @@
         function generateQRCode() {
             const selectedValue = idSelect.value;
             qrCodeContainer.innerHTML = '';
-            downloadBtn.classList.add('hidden'); // Hide download button initially
+            downloadBtn.classList.add('hidden');
             
             if (selectedValue) {
                 new QRCode(qrCodeContainer, {
@@ -132,13 +100,12 @@
                     width: 128,
                     height: 128
                 });
-                downloadBtn.classList.remove('hidden'); // Show download button
+                downloadBtn.classList.remove('hidden');
             } else {
                 alert("Please select an ID from the dropdown first.");
             }
         }
 
-        // ** NEW FUNCTION to download the QR Code as a JPG **
         function downloadQRCodeAsJPG() {
             const qrCodeImg = qrCodeContainer.querySelector('img');
             const selectedValue = idSelect.value;
@@ -146,21 +113,15 @@
                 alert("Please generate a QR code first.");
                 return;
             }
-
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
             const img = new Image();
-            
             img.onload = () => {
                 canvas.width = img.width;
                 canvas.height = img.height;
-                // Fill background with white (JPGs don't support transparency)
                 context.fillStyle = '#FFFFFF';
                 context.fillRect(0, 0, canvas.width, canvas.height);
-                // Draw the QR code image on top of the white background
                 context.drawImage(img, 0, 0);
-
-                // Create a link to download the JPG
                 const link = document.createElement('a');
                 link.href = canvas.toDataURL('image/jpeg');
                 link.download = `QRCode_${selectedValue}.jpg`;
@@ -170,7 +131,7 @@
         }
 
         generateBtn.addEventListener('click', generateQRCode);
-        downloadBtn.addEventListener('click', downloadQRCodeAsJPG); // ** NEW **
+        downloadBtn.addEventListener('click', downloadQRCodeAsJPG);
 
         window.onload = populateDropdown;
     </script>
