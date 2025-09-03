@@ -26,7 +26,6 @@
                     <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
                     <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 bg-gray-100 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
                     <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
-                    <a href="TrakSafe-PPE.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-helmet-safety sidebar-icon"></i><span class="ml-3">PPE Inventory</span></a>
                     <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
                     <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
                 </nav>
@@ -46,6 +45,7 @@
                     <option value="all">All Statuses</option>
                     <option value="Passed">Passed</option>
                     <option value="Failed">Failed</option>
+                    <option value="Requires Maintenance">Maintenance</option>
                 </select>
             </div>
             <div id="inspections-list" class="space-y-4"></div>
@@ -70,10 +70,21 @@
         const statusFilter = document.getElementById('status-filter');
         
         function getInspectionStatus(insp) {
+            // Check for an explicit status field first
             if (insp.status) {
-                return { status: insp.status, color: insp.status === 'Passed' ? 'green' : 'red' };
+                let color = 'yellow';
+                if (insp.status === 'Passed') color = 'green';
+                if (insp.status === 'Failed') color = 'red';
+                return { status: insp.status, color: color };
             }
-            const isFailed = insp.extinguisherChanged === true || insp.nozzleObstructed === true || insp.physicalChanges === true || insp.pressureGaugeOK === false || insp.safetyPinIntact === false;
+            
+            // Otherwise, calculate it safely from boolean fields
+            const isFailed = insp.extinguisherChanged === true || 
+                             insp.nozzleObstructed === true || 
+                             insp.physicalChanges === true || 
+                             insp.pressureGaugeOK === false || 
+                             insp.safetyPinIntact === false;
+            
             if (isFailed) {
                 return { status: 'Failed', color: 'red' };
             }
@@ -87,12 +98,7 @@
             const filtered = allInspections.filter(insp => {
                 const calculatedStatus = getInspectionStatus(insp).status;
                 const statusMatch = (statusValue === 'all' || calculatedStatus === statusValue);
-
-                // ** THIS IS THE CORRECTED LOGIC **
-                // If there's a search term, the extinguisherId must exist and match.
-                // If the search bar is empty, it's always a match.
                 const searchMatch = !searchTerm || (insp.extinguisherId && insp.extinguisherId.toLowerCase().includes(searchTerm));
-                
                 return statusMatch && searchMatch;
             });
             
@@ -100,6 +106,11 @@
             filtered.forEach(insp => {
                 const date = insp.date ? insp.date.toDate().toLocaleString() : 'N/A';
                 const { status, color } = getInspectionStatus(insp);
+                
+                // ** NEW: Added a text color class for the status **
+                let textColorClass = 'text-yellow-600';
+                if (status === 'Passed') textColorClass = 'text-green-600';
+                if (status === 'Failed') textColorClass = 'text-red-600';
 
                 inspectionsList.innerHTML += `
                     <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
@@ -111,7 +122,7 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="text-sm font-semibold">${status}</p>
+                            <p class="text-sm font-semibold ${textColorClass}">${status}</p>
                             <p class="text-xs text-gray-500">${date}</p>
                         </div>
                     </div>`;
