@@ -41,7 +41,7 @@
                 <h1 class="text-3xl font-bold">PPE Inventory</h1>
             </header>
             <div class="bg-white p-4 rounded-lg shadow mb-6 flex items-center space-x-4">
-                <input type="text" id="search-input" placeholder="Search by Item Name..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="text" id="search-input" placeholder="Search by Item Name or SKU..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
             <div id="loading-spinner" class="flex justify-center items-center h-64"><i class="fas fa-spinner fa-spin fa-3x text-gray-500"></i></div>
             <div id="ppe-table-container"></div>
@@ -66,7 +66,9 @@
         function renderPPE() {
             const searchTerm = searchInput.value.toLowerCase();
             const filtered = allPPE.filter(item => 
-                !searchTerm || (item.name && item.name.toLowerCase().includes(searchTerm))
+                !searchTerm || 
+                (item.name && item.name.toLowerCase().includes(searchTerm)) ||
+                (item.sku && item.sku.toLowerCase().includes(searchTerm))
             );
 
             if (filtered.length === 0) {
@@ -79,9 +81,10 @@
             
             const tableRows = filtered.map(item => {
                 return `<tr>
-                    <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">${item.name || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">${item.sku || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-500">${item.name || 'N/A'}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-gray-500">${item.location || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-gray-500">${item.quantity || 0}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-500 font-bold">${item.quantity || 0}</td>
                 </tr>`;
             }).join("");
 
@@ -90,6 +93,7 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">SKU</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Item Name</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Location</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Quantity</th>
@@ -107,11 +111,6 @@
                     loadingSpinner.classList.add('hidden');
                     allPPE = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                     renderPPE();
-                }, (error) => { 
-                    console.error(error);
-                    loadingSpinner.classList.add('hidden');
-                    emptyState.innerHTML = '<p class="text-red-500">Error fetching data.</p>';
-                    emptyState.classList.remove('hidden'); 
                 });
             } catch (error) { console.error("Auth error:", error); }
         }
