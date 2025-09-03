@@ -12,7 +12,7 @@
         body { font-family: 'Inter', sans-serif; } 
         .sidebar-icon { width: 1.5rem; height: 1.5rem; } 
     </style>
-    </head>
+</head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
     <div class="flex h-screen">
         <aside class="w-64 bg-white dark:bg-gray-800 flex-shrink-0">
@@ -62,6 +62,31 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // --- THEME TOGGLE LOGIC (MOVED INSIDE) ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+
+        function toggleTheme() {
+            htmlEl.classList.toggle('dark');
+            if (htmlEl.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        
+        // Set initial theme on page load
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            htmlEl.classList.add('dark');
+        } else {
+            htmlEl.classList.remove('dark');
+        }
+
+        // --- FIREBASE AND DASHBOARD LOGIC ---
         const firebaseConfig = { apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw", authDomain: "inspectionapp2-88221.firebaseapp.com", projectId: "inspectionapp2-88221", storageBucket: "inspectionapp2-88221.appspot.com", messagingSenderId: "805230972315", appId: "1:805230972315:web:d00e2d1a1869aefee1653e", measurementId: "G-WHXE1XECQF" };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -177,32 +202,6 @@
         });
 
         initialize();
-    </script>
-
-    <script>
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const htmlEl = document.documentElement;
-
-        function toggleTheme() {
-            htmlEl.classList.toggle('dark');
-            if (htmlEl.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        themeToggleBtn.addEventListener('click', toggleTheme);
-        
-        // On page load, set the theme
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            htmlEl.classList.add('dark');
-        } else {
-            htmlEl.classList.remove('dark');
-        }
     </script>
 </body>
 </html>
