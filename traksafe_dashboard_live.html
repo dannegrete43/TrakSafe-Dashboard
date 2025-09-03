@@ -102,9 +102,9 @@
                 data: {
                     labels: chartData.map(site => site.id),
                     datasets: [
-                        { label: "Completed", data: chartData.map(site => site.completed || 0), backgroundColor: "#3b82f6" },
-                        { label: "Passed", data: chartData.map(site => site.passed || 0), backgroundColor: "#22c55e" },
-                        { label: "Failed", data: chartData.map(site => site.failed || 0), backgroundColor: "#ef4444" }
+                        { label: "Completed", data: chartData.map(site => site.completed || 0), backgroundColor: "#6A96C2" },
+                        { label: "Passed", data: chartData.map(site => site.passed || 0), backgroundColor: "#8AB17D" },
+                        { label: "Failed", data: chartData.map(site => site.failed || 0), backgroundColor: "#D87C7C" }
                     ]
                 },
                 options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
