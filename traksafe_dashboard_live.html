@@ -13,26 +13,26 @@
         .sidebar-icon { width: 1.5rem; height: 1.5rem; } 
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
+<body class="bg-gray-100 text-gray-900">
     <div class="flex h-screen">
-        <aside class="w-64 bg-white dark:bg-gray-800 flex-shrink-0">
+        <aside class="w-64 bg-white flex-shrink-0">
             <div class="h-full flex flex-col">
-                <div class="h-16 flex items-center justify-center border-b border-gray-200 dark:border-gray-700">
+                <div class="h-16 flex items-center justify-center border-b border-gray-200">
                     <div class="flex items-center">
                         <img src="TrakSafe-Logo-Design.jpg" class="h-10 w-auto" alt="TrakSafe Logo">
                         <span class="ml-3 text-xl font-semibold">TrakSafe</span>
                     </div>
                 </div>
                 <nav class="flex-1 px-2 py-4 space-y-1">
-                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
-                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
-                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
-                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
-                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
+                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 bg-gray-100 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
+                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
+                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
+                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
+                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
                 </nav>
-                <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-700">
-                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span></a>
-                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span></a>
+                <div class="mt-auto p-4 border-t border-gray-200">
+                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span></a>
+                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span></a>
                 </div>
             </div>
         </aside>
@@ -41,13 +41,10 @@
                 <h1 class="text-3xl font-bold">Dashboard</h1>
                 <div class="flex items-center space-x-4">
                     <div id="site-switcher" class="relative">
-                         <select id="site-filter" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                         <select id="site-filter" class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500">
                          </select>
                     </div>
-                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-                        <i class="fa-solid fa-moon"></i>
-                    </button>
-                </div>
+                    </div>
             </header>
             <div id="dashboard-content" class="space-y-8">
             </div>
@@ -61,30 +58,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // --- THEME TOGGLE LOGIC (MOVED INSIDE) ---
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const htmlEl = document.documentElement;
-
-        function toggleTheme() {
-            htmlEl.classList.toggle('dark');
-            if (htmlEl.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        themeToggleBtn.addEventListener('click', toggleTheme);
-        
-        // Set initial theme on page load
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            htmlEl.classList.add('dark');
-        } else {
-            htmlEl.classList.remove('dark');
-        }
 
         // --- FIREBASE AND DASHBOARD LOGIC ---
         const firebaseConfig = { apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw", authDomain: "inspectionapp2-88221.firebaseapp.com", projectId: "inspectionapp2-88221", storageBucket: "inspectionapp2-88221.appspot.com", messagingSenderId: "805230972315", appId: "1:805230972315:web:d00e2d1a1869aefee1653e", measurementId: "G-WHXE1XECQF" };
@@ -100,13 +73,13 @@
         function displayDashboardLayout() {
             dashboardContent.innerHTML = `
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-gray-500 dark:text-gray-400">Total</h3><p id="total-stat" class="text-3xl font-bold mt-1">0</p></div>
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-gray-500 dark:text-gray-400">Completed</h3><p id="completed-stat" class="text-3xl font-bold mt-1">0</p></div>
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-green-500">Passed</h3><p id="passed-stat" class="text-3xl font-bold mt-1 text-green-500">0</p></div>
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-red-500">Failed</h3><p id="failed-stat" class="text-3xl font-bold mt-1 text-red-500">0</p></div>
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h3 class="text-yellow-500">Maintenance</h3><p id="maintenance-stat" class="text-3xl font-bold mt-1 text-yellow-500">0</p></div>
+                    <div class="bg-white p-6 rounded-lg shadow"><h3 class="text-gray-500">Total</h3><p id="total-stat" class="text-3xl font-bold mt-1">0</p></div>
+                    <div class="bg-white p-6 rounded-lg shadow"><h3 class="text-gray-500">Completed</h3><p id="completed-stat" class="text-3xl font-bold mt-1">0</p></div>
+                    <div class="bg-white p-6 rounded-lg shadow"><h3 class="text-green-500">Passed</h3><p id="passed-stat" class="text-3xl font-bold mt-1 text-green-500">0</p></div>
+                    <div class="bg-white p-6 rounded-lg shadow"><h3 class="text-red-500">Failed</h3><p id="failed-stat" class="text-3xl font-bold mt-1 text-red-500">0</p></div>
+                    <div class="bg-white p-6 rounded-lg shadow"><h3 class="text-yellow-500">Maintenance</h3><p id="maintenance-stat" class="text-3xl font-bold mt-1 text-yellow-500">0</p></div>
                 </div>
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mt-8">
+                <div class="bg-white p-6 rounded-lg shadow mt-8">
                     <h3 class="text-xl font-semibold mb-4">Site Inspection Overview</h3>
                     <div class="h-80"><canvas id="site-overview-chart"></canvas></div>
                 </div>`;
