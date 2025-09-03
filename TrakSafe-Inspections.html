@@ -26,7 +26,6 @@
                     <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
                     <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 bg-gray-100 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
                     <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
-                    <a href="TrakSafe-PPE.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-helmet-safety sidebar-icon"></i><span class="ml-3">PPE Inventory</span></a>
                     <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
                     <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
                 </nav>
@@ -46,7 +45,6 @@
                     <option value="all">All Statuses</option>
                     <option value="Passed">Passed</option>
                     <option value="Failed">Failed</option>
-                    <option value="Requires Maintenance">Maintenance</option>
                 </select>
             </div>
             <div id="inspections-list" class="space-y-4"></div>
@@ -58,24 +56,51 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
         const firebaseConfig = { apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw", authDomain: "inspectionapp2-88221.firebaseapp.com", projectId: "inspectionapp2-88221", storageBucket: "inspectionapp2-88221.appspot.com", messagingSenderId: "805230972315", appId: "1:805230972315:web:d00e2d1a1869aefee1653e", measurementId: "G-WHXE1XECQF" };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        
         let allInspections = [];
-        const inspectionsList = document.getElementById('inspections-list'), loadingSpinner = document.getElementById('loading-spinner'), emptyState = document.getElementById('empty-state'), searchInput = document.getElementById('search-input'), statusFilter = document.getElementById('status-filter');
+        const inspectionsList = document.getElementById('inspections-list');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const emptyState = document.getElementById('empty-state');
+        const searchInput = document.getElementById('search-input');
+        const statusFilter = document.getElementById('status-filter');
         
         function renderInspections() {
             const searchTerm = searchInput.value.toLowerCase();
-            const status = statusFilter.value;
-            const filtered = allInspections.filter(insp => 
-                (insp.extinguisherId && insp.extinguisherId.toLowerCase().includes(searchTerm)) && 
-                (status === 'all' || insp.status === status)
-            );
+            const statusValue = statusFilter.value;
+            
+            const filtered = allInspections.filter(insp => {
+                // Determine the status from the boolean fields
+                const isFailed = insp.extinguisherChanged === true || 
+                                 insp.nozzleObstructed === true || 
+                                 insp.physicalChanges === true || 
+                                 insp.pressureGaugeOK === false || 
+                                 insp.safetyPinIntact === false;
+                const currentStatus = isFailed ? 'Failed' : 'Passed';
+                
+                const searchMatch = insp.extinguisherId && insp.extinguisherId.toLowerCase().includes(searchTerm);
+                const statusMatch = (statusValue === 'all' || currentStatus === statusValue);
+                
+                return searchMatch && statusMatch;
+            });
             
             inspectionsList.innerHTML = '';
             filtered.forEach(insp => {
                 const date = insp.date ? insp.date.toDate().toLocaleString() : 'N/A';
-                const statusColor = insp.status === 'Passed' ? 'green' : (insp.status === 'Failed' ? 'red' : 'yellow');
+                
+                // ** NEW LOGIC to determine status and color based on your data **
+                const isFailed = insp.extinguisherChanged === true || 
+                                 insp.nozzleObstructed === true || 
+                                 insp.physicalChanges === true || 
+                                 insp.pressureGaugeOK === false || 
+                                 insp.safetyPinIntact === false;
+                
+                const status = isFailed ? 'Failed' : 'Passed';
+                const statusColor = isFailed ? 'red' : 'green';
+
                 inspectionsList.innerHTML += `
                     <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
                         <div class="flex items-center">
@@ -86,7 +111,7 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="text-sm font-semibold">${insp.status}</p>
+                            <p class="text-sm font-semibold">${status}</p>
                             <p class="text-xs text-gray-500">${date}</p>
                         </div>
                     </div>`;
