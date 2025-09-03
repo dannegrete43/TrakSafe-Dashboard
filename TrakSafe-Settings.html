@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,9 +78,8 @@
 
         onAuthStateChanged(auth, user => {
             const userIdElement = document.getElementById('user-id');
-            const userStatusElement = document.getElementById('user-status'); // ** NEW **
+            const userStatusElement = document.getElementById('user-status');
             if(user) { 
-                // ** FIX FOR USER DISPLAY **
                 userIdElement.textContent = `User ID: ${user.uid}`;
                 userStatusElement.textContent = 'Signed In Anonymously'; 
             } else { 
@@ -89,27 +88,40 @@
             }
         });
 
-        // Sign in anonymously when the page loads
         signInAnonymously(auth).catch(e => console.error(e));
     </script>
     
     <script>
+        // --- THEME TOGGLE LOGIC ---
+        const themeToggleHeader = document.getElementById('theme-toggle-header');
+        const themeToggleMain = document.getElementById('theme-toggle-main');
+        const htmlEl = document.documentElement;
+
+        // Function to toggle the theme
         function toggleTheme() {
-            document.documentElement.classList.toggle('dark');
+            htmlEl.classList.toggle('dark');
+            // Save the user's preference in localStorage
+            if (htmlEl.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
         }
 
-        // Wait for the page to be fully loaded before attaching events
-        document.addEventListener('DOMContentLoaded', () => {
-            const headerBtn = document.getElementById('theme-toggle-header');
-            const mainBtn = document.getElementById('theme-toggle-main');
-            
-            if (headerBtn) {
-                headerBtn.addEventListener('click', toggleTheme);
-            }
-            if (mainBtn) {
-                mainBtn.addEventListener('click', toggleTheme);
-            }
-        });
+        // Attach event listeners to both buttons
+        themeToggleHeader.addEventListener('click', toggleTheme);
+        themeToggleMain.addEventListener('click', toggleTheme);
+        
+        // --- INITIAL THEME SET ---
+        // On page load, check for saved theme in localStorage or user's OS preference
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            htmlEl.classList.add('dark');
+        } else {
+            htmlEl.classList.remove('dark');
+        }
     </script>
 </body>
 </html>
