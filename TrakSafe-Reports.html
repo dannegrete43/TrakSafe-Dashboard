@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,76 +11,54 @@
         body { font-family: 'Inter', sans-serif; } 
         .sidebar-icon { width: 1.5rem; height: 1.5rem; } 
     </style>
-    <script> 
-        function toggleTheme() { 
-            document.documentElement.classList.toggle('dark'); 
-        } 
-    </script>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
+<body class="bg-gray-100 text-gray-900">
     <div class="flex h-screen">
-        <aside class="w-64 bg-white dark:bg-gray-800 flex-shrink-0">
+        <aside class="w-64 bg-white flex-shrink-0">
             <div class="h-full flex flex-col">
-                <div class="h-16 flex items-center justify-center border-b border-gray-200 dark:border-gray-700">
+                <div class="h-16 flex items-center justify-center border-b border-gray-200">
                     <div class="flex items-center">
                         <img src="TrakSafe-Logo-Design.jpg" class="h-10 w-auto" alt="TrakSafe Logo">
                         <span class="ml-3 text-xl font-semibold">TrakSafe</span>
                     </div>
                 </div>
                 <nav class="flex-1 px-2 py-4 space-y-1">
-                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span>
-                    </a>
-                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span>
-                    </a>
-                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span>
-                    </a>
-                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span>
-                    </a>
-                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span>
-                    </a>
+                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
+                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
+                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
+                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
+                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 bg-gray-100 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
                 </nav>
-                <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-700">
-                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span>
-                    </a>
-                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span>
-                    </a>
+                <div class="mt-auto p-4 border-t border-gray-200">
+                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span></a>
+                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span></a>
                 </div>
             </div>
         </aside>
         <main class="flex-1 p-6 md:p-10 overflow-y-auto">
             <header class="flex justify-between items-center mb-8">
                 <h1 class="text-3xl font-bold">Reports</h1>
-                <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
             </header>
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-6">
+            <div class="bg-white p-6 rounded-lg shadow mb-6">
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                     <div>
                         <label for="report-type" class="block text-sm font-medium">Report Type</label>
-                        <select id="report-type" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 dark:bg-gray-700 dark:border-gray-600 rounded-md">
+                        <select id="report-type" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
                             <option>Inspection Log</option>
                         </select>
                     </div>
                     <div>
                         <label for="site-filter" class="block text-sm font-medium">Site</label>
-                        <select id="site-filter" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 dark:bg-gray-700 dark:border-gray-600 rounded-md">
-                            </select>
+                        <select id="site-filter" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                        </select>
                     </div>
                     <div>
                         <label for="start-date" class="block text-sm font-medium">Start Date</label>
-                        <input type="date" id="start-date" class="mt-1 block w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600">
+                        <input type="date" id="start-date" class="mt-1 block w-full px-3 py-2 border rounded-md">
                     </div>
                     <div>
                         <label for="end-date" class="block text-sm font-medium">End Date</label>
-                        <input type="date" id="end-date" class="mt-1 block w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600">
+                        <input type="date" id="end-date" class="mt-1 block w-full px-3 py-2 border rounded-md">
                     </div>
                     <button id="generate-report" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Generate Report</button>
                 </div>
@@ -94,34 +72,27 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- Firebase Configuration ---
         const firebaseConfig = { apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw", authDomain: "inspectionapp2-88221.firebaseapp.com", projectId: "inspectionapp2-88221", storageBucket: "inspectionapp2-88221.appspot.com", messagingSenderId: "805230972315", appId: "1:805230972315:web:d00e2d1a1869aefee1653e", measurementId: "G-WHXE1XECQF" };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- DOM Elements ---
         const reportOutput = document.getElementById('report-output');
         const generateBtn = document.getElementById('generate-report');
         const startDateInput = document.getElementById('start-date');
         const endDateInput = document.getElementById('end-date');
-        const siteFilter = document.getElementById('site-filter'); // ** NEW **
+        const siteFilter = document.getElementById('site-filter');
         let reportData = [];
 
-        // --- Functions ---
-        
-        // ** NEW ** Populates the site filter dropdown with unique locations
         async function populateSiteFilter() {
             await signInAnonymously(getAuth(app));
             const querySnapshot = await getDocs(collection(db, "inspections"));
             const locations = new Set();
             querySnapshot.forEach(doc => {
                 const data = doc.data();
-                if (data.location) {
-                    locations.add(data.location);
-                }
+                if (data.location) locations.add(data.location);
             });
             
-            siteFilter.innerHTML = '<option value="">All Sites</option>'; // Default option
+            siteFilter.innerHTML = '<option value="">All Sites</option>';
             [...locations].sort().forEach(location => {
                 const option = document.createElement('option');
                 option.value = location;
@@ -151,7 +122,7 @@
                 return `<tr><td class="px-6 py-4 whitespace-nowrap">${item.assetId || ""}</td><td class="px-6 py-4 whitespace-nowrap">${item.location || ""}</td><td class="px-6 py-4 whitespace-nowrap">${item.date.toDate().toLocaleDateString()}</td><td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusClass}">${item.status}</span></td></tr>`;
             }).join("");
 
-            reportOutput.innerHTML = `<div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><div class="flex justify-between items-center mb-4"><h2 class="text-xl font-bold">Inspection Log</h2><button id="export-csv" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Export CSV</button></div><div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"><thead><tr><th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Asset ID</th><th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Location</th><th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th><th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th></tr></thead><tbody class="divide-y divide-gray-200 dark:divide-gray-700">${tableRows}</tbody></table></div></div>`;
+            reportOutput.innerHTML = `<div class="bg-white p-6 rounded-lg shadow"><div class="flex justify-between items-center mb-4"><h2 class="text-xl font-bold">Inspection Log</h2><button id="export-csv" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Export CSV</button></div><div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead><tr><th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Asset ID</th><th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Location</th><th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th><th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th></tr></thead><tbody class="divide-y divide-gray-200">${tableRows}</tbody></table></div></div>`;
         }
 
         function escapeCsvData(data) {
@@ -178,7 +149,6 @@
             const url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
 
-            // ** MODIFIED ** filename includes the selected site
             const today = new Date().toISOString().split("T")[0];
             const siteName = siteFilter.value ? siteFilter.value.replace(/\s+/g, '_') : 'All_Sites';
             link.setAttribute("download", `TrakSafe_Report_${siteName}_${today}.csv`);
@@ -195,7 +165,7 @@
             const startDate = new Date(startDateInput.value);
             const endDate = new Date(endDateInput.value);
             endDate.setHours(23, 59, 59, 999);
-            const selectedSite = siteFilter.value; // ** NEW **
+            const selectedSite = siteFilter.value;
 
             try {
                 await signInAnonymously(getAuth(app));
@@ -205,7 +175,6 @@
                     .filter(item => {
                         if (!item.date) return false;
                         const itemDate = item.date.toDate();
-                        // ** MODIFIED ** filter logic includes site
                         const dateMatch = itemDate >= startDate && itemDate <= endDate;
                         const siteMatch = !selectedSite || item.location === selectedSite;
                         return dateMatch && siteMatch;
@@ -220,7 +189,6 @@
             }
         }
         
-        // --- Event Listeners ---
         generateBtn.addEventListener("click", fetchReportData);
         reportOutput.addEventListener('click', function(event) {
             if (event.target.id === 'export-csv') {
@@ -228,10 +196,9 @@
             }
         });
 
-        // --- Initialization ---
         window.onload = () => {
             setDefaultDates();
-            populateSiteFilter(); // ** NEW **
+            populateSiteFilter();
         };
     </script>
 </body>
