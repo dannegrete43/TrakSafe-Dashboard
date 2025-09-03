@@ -62,12 +62,17 @@
                 </button>
             </header>
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-6">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                     <div>
                         <label for="report-type" class="block text-sm font-medium">Report Type</label>
                         <select id="report-type" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 dark:bg-gray-700 dark:border-gray-600 rounded-md">
                             <option>Inspection Log</option>
                         </select>
+                    </div>
+                    <div>
+                        <label for="site-filter" class="block text-sm font-medium">Site</label>
+                        <select id="site-filter" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 dark:bg-gray-700 dark:border-gray-600 rounded-md">
+                            </select>
                     </div>
                     <div>
                         <label for="start-date" class="block text-sm font-medium">Start Date</label>
@@ -99,11 +104,32 @@
         const generateBtn = document.getElementById('generate-report');
         const startDateInput = document.getElementById('start-date');
         const endDateInput = document.getElementById('end-date');
-        let reportData = []; // To store the current report data for export
+        const siteFilter = document.getElementById('site-filter'); // ** NEW **
+        let reportData = [];
 
         // --- Functions ---
         
-        // Sets default date range to the last 30 days
+        // ** NEW ** Populates the site filter dropdown with unique locations
+        async function populateSiteFilter() {
+            await signInAnonymously(getAuth(app));
+            const querySnapshot = await getDocs(collection(db, "inspections"));
+            const locations = new Set();
+            querySnapshot.forEach(doc => {
+                const data = doc.data();
+                if (data.location) {
+                    locations.add(data.location);
+                }
+            });
+            
+            siteFilter.innerHTML = '<option value="">All Sites</option>'; // Default option
+            [...locations].sort().forEach(location => {
+                const option = document.createElement('option');
+                option.value = location;
+                option.textContent = location;
+                siteFilter.appendChild(option);
+            });
+        }
+        
         function setDefaultDates() {
             const endDate = new Date();
             const startDate = new Date();
@@ -112,60 +138,22 @@
             startDateInput.value = startDate.toISOString().split("T")[0];
         }
 
-        // Renders the report data into a table
         function renderReport(data) {
-            reportData = data; // Store data for CSV export
+            reportData = data;
             
             if (data.length === 0) {
-                reportOutput.innerHTML = `
-                    <div class="text-center py-16">
-                        <i class="fas fa-file-alt fa-4x text-gray-400"></i>
-                        <h2 class="mt-4 text-2xl font-semibold">No Records Found</h2>
-                        <p class="mt-2 text-gray-500">No inspections match the selected date range.</p>
-                    </div>`;
+                reportOutput.innerHTML = `<div class="text-center py-16"><i class="fas fa-file-alt fa-4x text-gray-400"></i><h2 class="mt-4 text-2xl font-semibold">No Records Found</h2><p class="mt-2 text-gray-500">No inspections match the selected filters.</p></div>`;
                 return;
             }
 
             const tableRows = data.map(item => {
                 const statusClass = item.status === "Passed" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
-                return `
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">${item.assetId || ""}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">${item.location || ""}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">${item.date.toDate().toLocaleDateString()}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusClass}">
-                                ${item.status}
-                            </span>
-                        </td>
-                    </tr>`;
+                return `<tr><td class="px-6 py-4 whitespace-nowrap">${item.assetId || ""}</td><td class="px-6 py-4 whitespace-nowrap">${item.location || ""}</td><td class="px-6 py-4 whitespace-nowrap">${item.date.toDate().toLocaleDateString()}</td><td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusClass}">${item.status}</span></td></tr>`;
             }).join("");
 
-            reportOutput.innerHTML = `
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-xl font-bold">Inspection Log</h2>
-                        <button id="export-csv" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Export CSV</button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead>
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Asset ID</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Location</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                ${tableRows}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>`;
+            reportOutput.innerHTML = `<div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><div class="flex justify-between items-center mb-4"><h2 class="text-xl font-bold">Inspection Log</h2><button id="export-csv" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Export CSV</button></div><div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"><thead><tr><th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Asset ID</th><th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Location</th><th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th><th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th></tr></thead><tbody class="divide-y divide-gray-200 dark:divide-gray-700">${tableRows}</tbody></table></div></div>`;
         }
 
-        // Escapes CSV data to handle commas and quotes
         function escapeCsvData(data) {
             if (data == null) return '';
             const str = String(data);
@@ -175,7 +163,6 @@
             return str;
         }
 
-        // Exports the currently stored report data to a CSV file
         function exportToCSV() {
             const headers = ["Asset ID", "Location", "Date", "Status"];
             const rows = reportData.map(item => [
@@ -190,21 +177,25 @@
             const link = document.createElement("a");
             const url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
+
+            // ** MODIFIED ** filename includes the selected site
             const today = new Date().toISOString().split("T")[0];
-            link.setAttribute("download", `TrakSafe_Report_${today}.csv`);
+            const siteName = siteFilter.value ? siteFilter.value.replace(/\s+/g, '_') : 'All_Sites';
+            link.setAttribute("download", `TrakSafe_Report_${siteName}_${today}.csv`);
+            
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
-        // Fetches report data from Firebase based on date range
         async function fetchReportData() {
             generateBtn.disabled = true;
             generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Generating...';
             
             const startDate = new Date(startDateInput.value);
             const endDate = new Date(endDateInput.value);
-            endDate.setHours(23, 59, 59, 999); // Include the entire end day
+            endDate.setHours(23, 59, 59, 999);
+            const selectedSite = siteFilter.value; // ** NEW **
 
             try {
                 await signInAnonymously(getAuth(app));
@@ -214,7 +205,10 @@
                     .filter(item => {
                         if (!item.date) return false;
                         const itemDate = item.date.toDate();
-                        return itemDate >= startDate && itemDate <= endDate;
+                        // ** MODIFIED ** filter logic includes site
+                        const dateMatch = itemDate >= startDate && itemDate <= endDate;
+                        const siteMatch = !selectedSite || item.location === selectedSite;
+                        return dateMatch && siteMatch;
                     });
                 renderReport(filteredData);
             } catch (error) {
@@ -227,11 +221,7 @@
         }
         
         // --- Event Listeners ---
-        
-        // Event listener for the "Generate Report" button
         generateBtn.addEventListener("click", fetchReportData);
-        
-        // Use event delegation for the "Export CSV" button since it's created dynamically
         reportOutput.addEventListener('click', function(event) {
             if (event.target.id === 'export-csv') {
                 exportToCSV();
@@ -239,11 +229,9 @@
         });
 
         // --- Initialization ---
-        
-        // Set default dates and sign in on page load
         window.onload = () => {
             setDefaultDates();
-            signInAnonymously(getAuth(app)).catch(error => console.error(error));
+            populateSiteFilter(); // ** NEW **
         };
     </script>
 </body>
