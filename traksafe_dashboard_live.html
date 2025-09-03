@@ -12,11 +12,6 @@
         body { font-family: 'Inter', sans-serif; } 
         .sidebar-icon { width: 1.5rem; height: 1.5rem; } 
     </style>
-    <script> 
-        function toggleTheme() { 
-            document.documentElement.classList.toggle('dark'); 
-        } 
-    </script>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
     <div class="flex h-screen">
@@ -29,29 +24,15 @@
                     </div>
                 </div>
                 <nav class="flex-1 px-2 py-4 space-y-1">
-                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span>
-                    </a>
-                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span>
-                    </a>
-                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span>
-                    </a>
-                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span>
-                    </a>
-                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span>
-                    </a>
+                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
+                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
+                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
+                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
+                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
                 </nav>
                 <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-700">
-                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span>
-                    </a>
-                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
-                        <i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span>
-                    </a>
+                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span></a>
+                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span></a>
                 </div>
             </div>
         </aside>
@@ -61,15 +42,15 @@
                 <div class="flex items-center space-x-4">
                     <div id="site-switcher" class="relative">
                          <select id="site-filter" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                            </select>
+                         </select>
                     </div>
-                    <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
                         <i class="fa-solid fa-moon"></i>
                     </button>
                 </div>
             </header>
             <div id="dashboard-content" class="space-y-8">
-                </div>
+            </div>
             <div id="loading-spinner" class="flex justify-center items-center h-64">
                 <i class="fas fa-spinner fa-spin fa-3x text-gray-500"></i>
             </div>
@@ -81,19 +62,16 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- Firebase Configuration ---
         const firebaseConfig = { apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw", authDomain: "inspectionapp2-88221.firebaseapp.com", projectId: "inspectionapp2-88221", storageBucket: "inspectionapp2-88221.appspot.com", messagingSenderId: "805230972315", appId: "1:805230972315:web:d00e2d1a1869aefee1653e", measurementId: "G-WHXE1XECQF" };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- DOM Elements ---
         const loadingSpinner = document.getElementById("loading-spinner");
         const dashboardContent = document.getElementById("dashboard-content");
         const siteFilter = document.getElementById('site-filter');
-        let siteChart = null; // To hold the chart instance
-        let allSitesData = []; // To store the complete dataset
+        let siteChart = null;
+        let allSitesData = [];
 
-        // --- UI Rendering Functions ---
         function displayDashboardLayout() {
             dashboardContent.innerHTML = `
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
@@ -119,9 +97,7 @@
 
         function renderSiteChart(chartData) {
             const ctx = document.getElementById("site-overview-chart").getContext("2d");
-            if (siteChart) {
-                siteChart.destroy();
-            }
+            if (siteChart) siteChart.destroy();
             siteChart = new Chart(ctx, {
                 type: "bar",
                 data: {
@@ -136,9 +112,8 @@
             });
         }
         
-        // --- Data Handling Functions ---
         function populateSiteFilter(sites) {
-            siteFilter.innerHTML = '<option value="all">All Sites</option>'; // Add "All Sites" option
+            siteFilter.innerHTML = '<option value="all">All Sites</option>';
             sites.forEach(site => {
                 const option = document.createElement("option");
                 option.value = site.id;
@@ -150,10 +125,7 @@
         function updateDashboardForSelection(selectedSiteId) {
             let dataToShow = [];
             if (selectedSiteId === 'all') {
-                // For "All Sites", use the full dataset for the chart
                 dataToShow = allSitesData;
-                
-                // Calculate and display combined stats
                 const combinedStats = allSitesData.reduce((acc, site) => {
                     acc.completed += site.completed || 0;
                     acc.passed += site.passed || 0;
@@ -164,39 +136,29 @@
                 }, { completed: 0, passed: 0, failed: 0, remaining: 0, maintenance: 0 });
                 combinedStats.total = combinedStats.completed + combinedStats.remaining;
                 updateStatsUI(combinedStats);
-
             } else {
-                // For a single site, find its data
                 const selectedSiteData = allSitesData.find(site => site.id === selectedSiteId);
                 if (selectedSiteData) {
-                    dataToShow = [selectedSiteData]; // Chart needs an array
-                    const stats = {
-                        ...selectedSiteData,
-                        total: (selectedSiteData.completed || 0) + (selectedSiteData.remaining || 0)
-                    };
+                    dataToShow = [selectedSiteData];
+                    const stats = { ...selectedSiteData, total: (selectedSiteData.completed || 0) + (selectedSiteData.remaining || 0) };
                     updateStatsUI(stats);
                 }
             }
             renderSiteChart(dataToShow);
         }
 
-        // --- Initialization ---
         async function initialize() {
             try {
                 await signInAnonymously(getAuth(app));
                 onSnapshot(collection(db, "sites"), (snapshot) => {
                     loadingSpinner.classList.add("hidden");
                     allSitesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
                     if (allSitesData.length === 0) {
-                        // Handle case with no data if necessary
                         dashboardContent.innerHTML = `<p>No site data found.</p>`;
                         return;
                     }
-                    
                     displayDashboardLayout();
                     populateSiteFilter(allSitesData);
-                    // Initially show data for "All Sites"
                     updateDashboardForSelection('all'); 
                 }, (error) => {
                     console.error("Firebase snapshot error:", error);
@@ -210,12 +172,40 @@
             }
         }
 
-        // Event listener for the site filter dropdown
         siteFilter.addEventListener('change', (event) => {
             updateDashboardForSelection(event.target.value);
         });
 
-        window.onload = initialize;
+        initialize();
+    </script>
+
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+
+        // Function to toggle the theme
+        function toggleTheme() {
+            htmlEl.classList.toggle('dark');
+            // Save the user's preference in localStorage
+            if (htmlEl.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Attach event listener
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        
+        // On page load, check for saved theme or user's OS preference
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            htmlEl.classList.add('dark');
+        } else {
+            htmlEl.classList.remove('dark');
+        }
     </script>
 </body>
 </html>
