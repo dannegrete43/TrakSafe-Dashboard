@@ -39,7 +39,6 @@
             <header class="flex justify-between items-center mb-8">
                 <h1 class="text-3xl font-bold">Inspections</h1>
             </header>
-            
             <div class="bg-white p-4 rounded-lg shadow mb-6 flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
                 <input type="text" id="search-input" placeholder="Search by Extinguisher ID..." class="w-full sm:flex-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <select id="status-filter" class="w-full sm:w-auto px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -69,23 +68,35 @@
         const searchInput = document.getElementById('search-input');
         const statusFilter = document.getElementById('status-filter');
         
+        // ** NEW, SAFER FUNCTION to determine status **
+        function getInspectionStatus(insp) {
+            // If a 'status' field already exists (like in future data), use it.
+            if (insp.status) {
+                return { status: insp.status, color: insp.status === 'Passed' ? 'green' : 'red' };
+            }
+            
+            // Otherwise, calculate it safely.
+            const isFailed = insp.extinguisherChanged === true || 
+                             insp.nozzleObstructed === true || 
+                             insp.physicalChanges === true || 
+                             insp.pressureGaugeOK === false || 
+                             insp.safetyPinIntact === false;
+            
+            if (isFailed) {
+                return { status: 'Failed', color: 'red' };
+            }
+            return { status: 'Passed', color: 'green' };
+        }
+
         function renderInspections() {
             const searchTerm = searchInput.value.toLowerCase();
             const statusValue = statusFilter.value;
             
             const filtered = allInspections.filter(insp => {
-                // ** THIS IS THE CORRECTED LOGIC **
-                // First, calculate the status based on the boolean fields in the data
-                const isFailed = insp.extinguisherChanged === true || 
-                                 insp.nozzleObstructed === true || 
-                                 insp.physicalChanges === true || 
-                                 insp.pressureGaugeOK === false || 
-                                 insp.safetyPinIntact === false;
-                const currentStatus = isFailed ? 'Failed' : 'Passed';
+                const calculatedStatus = getInspectionStatus(insp).status;
                 
-                // Then, apply the filters
                 const searchMatch = insp.extinguisherId && insp.extinguisherId.toLowerCase().includes(searchTerm);
-                const statusMatch = (statusValue === 'all' || currentStatus === statusValue);
+                const statusMatch = (statusValue === 'all' || calculatedStatus === statusValue);
                 
                 return searchMatch && statusMatch;
             });
@@ -93,16 +104,12 @@
             inspectionsList.innerHTML = '';
             filtered.forEach(insp => {
                 const date = insp.date ? insp.date.toDate().toLocaleString() : 'N/A';
-                
-                // Recalculate status for display (or reuse from filter logic)
-                const isFailed = insp.extinguisherChanged === true || insp.nozzleObstructed === true || insp.physicalChanges === true || insp.pressureGaugeOK === false || insp.safetyPinIntact === false;
-                const status = isFailed ? 'Failed' : 'Passed';
-                const statusColor = isFailed ? 'red' : 'green';
+                const { status, color } = getInspectionStatus(insp);
 
                 inspectionsList.innerHTML += `
                     <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
                         <div class="flex items-center">
-                            <div class="w-3 h-3 rounded-full bg-${statusColor}-500 mr-4"></div>
+                            <div class="w-3 h-3 rounded-full bg-${color}-500 mr-4"></div>
                             <div>
                                 <p class="font-semibold">${insp.extinguisherId || 'No ID'}</p>
                                 <p class="text-sm text-gray-500">${insp.site || 'No Site'}</p>
