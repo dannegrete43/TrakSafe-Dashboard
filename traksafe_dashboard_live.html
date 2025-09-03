@@ -12,7 +12,7 @@
         body { font-family: 'Inter', sans-serif; } 
         .sidebar-icon { width: 1.5rem; height: 1.5rem; } 
     </style>
-</head>
+    </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
     <div class="flex h-screen">
         <aside class="w-64 bg-white dark:bg-gray-800 flex-shrink-0">
@@ -183,10 +183,8 @@
         const themeToggleBtn = document.getElementById('theme-toggle');
         const htmlEl = document.documentElement;
 
-        // Function to toggle the theme
         function toggleTheme() {
             htmlEl.classList.toggle('dark');
-            // Save the user's preference in localStorage
             if (htmlEl.classList.contains('dark')) {
                 localStorage.setItem('theme', 'dark');
             } else {
@@ -194,10 +192,9 @@
             }
         }
 
-        // Attach event listener
         themeToggleBtn.addEventListener('click', toggleTheme);
         
-        // On page load, check for saved theme or user's OS preference
+        // On page load, set the theme
         const savedTheme = localStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
