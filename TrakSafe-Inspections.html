@@ -68,20 +68,11 @@
         const searchInput = document.getElementById('search-input');
         const statusFilter = document.getElementById('status-filter');
         
-        // ** NEW, SAFER FUNCTION to determine status **
         function getInspectionStatus(insp) {
-            // If a 'status' field already exists (like in future data), use it.
             if (insp.status) {
                 return { status: insp.status, color: insp.status === 'Passed' ? 'green' : 'red' };
             }
-            
-            // Otherwise, calculate it safely.
-            const isFailed = insp.extinguisherChanged === true || 
-                             insp.nozzleObstructed === true || 
-                             insp.physicalChanges === true || 
-                             insp.pressureGaugeOK === false || 
-                             insp.safetyPinIntact === false;
-            
+            const isFailed = insp.extinguisherChanged === true || insp.nozzleObstructed === true || insp.physicalChanges === true || insp.pressureGaugeOK === false || insp.safetyPinIntact === false;
             if (isFailed) {
                 return { status: 'Failed', color: 'red' };
             }
@@ -94,11 +85,14 @@
             
             const filtered = allInspections.filter(insp => {
                 const calculatedStatus = getInspectionStatus(insp).status;
-                
-                const searchMatch = insp.extinguisherId && insp.extinguisherId.toLowerCase().includes(searchTerm);
                 const statusMatch = (statusValue === 'all' || calculatedStatus === statusValue);
+
+                // ** THIS IS THE CORRECTED LOGIC **
+                // If there's a search term, the extinguisherId must exist and match.
+                // If the search bar is empty, it's always a match.
+                const searchMatch = !searchTerm || (insp.extinguisherId && insp.extinguisherId.toLowerCase().includes(searchTerm));
                 
-                return searchMatch && statusMatch;
+                return statusMatch && searchMatch;
             });
             
             inspectionsList.innerHTML = '';
@@ -111,7 +105,7 @@
                         <div class="flex items-center">
                             <div class="w-3 h-3 rounded-full bg-${color}-500 mr-4"></div>
                             <div>
-                                <p class="font-semibold">${insp.extinguisherId || 'No ID'}</p>
+                                <p class="font-semibold">${insp.extinguisherId || 'N/A'}</p>
                                 <p class="text-sm text-gray-500">${insp.site || 'No Site'}</p>
                             </div>
                         </div>
