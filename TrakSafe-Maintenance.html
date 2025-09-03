@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +7,38 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style> body { font-family: 'Inter', sans-serif; } .sidebar-icon { width: 1.5rem; height: 1.5rem; } </style>
-    <script> function toggleTheme() { document.documentElement.classList.toggle('dark'); } </script>
+    <style> 
+        body { font-family: 'Inter', sans-serif; } 
+        .sidebar-icon { width: 1.5rem; height: 1.5rem; } 
+    </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
+<body class="bg-gray-100 text-gray-900">
     <div class="flex h-screen">
-        <aside class="w-64 bg-white dark:bg-gray-800 flex-shrink-0">
+        <aside class="w-64 bg-white flex-shrink-0">
             <div class="h-full flex flex-col">
-                <div class="h-16 flex items-center justify-center border-b border-gray-200 dark:border-gray-700"><div class="flex items-center"><img src="TrakSafe-Logo-Design.jpg" class="h-10 w-auto" alt="TrakSafe Logo"><span class="ml-3 text-xl font-semibold">TrakSafe</span></div></div>
+                <div class="h-16 flex items-center justify-center border-b border-gray-200">
+                    <div class="flex items-center">
+                        <img src="TrakSafe-Logo-Design.jpg" class="h-10 w-auto" alt="TrakSafe Logo">
+                        <span class="ml-3 text-xl font-semibold">TrakSafe</span>
+                    </div>
+                </div>
                 <nav class="flex-1 px-2 py-4 space-y-1">
-                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
-                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
-                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
-                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
-                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
+                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
+                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
+                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 bg-gray-100 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
+                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
+                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
                 </nav>
-                <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-700">
-                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span></a>
-                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"><i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span></a>
+                <div class="mt-auto p-4 border-t border-gray-200">
+                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span></a>
+                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span></a>
                 </div>
             </div>
         </aside>
         <main class="flex-1 p-6 md:p-10 overflow-y-auto">
-             <header class="flex justify-between items-center mb-8"><h1 class="text-3xl font-bold">Maintenance</h1><button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"><i class="fa-solid fa-moon"></i></button></header>
+             <header class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-bold">Maintenance</h1>
+             </header>
              <div id="maintenance-list" class="space-y-4"></div>
              <div id="loading-spinner" class="flex justify-center items-center h-64"><i class="fas fa-spinner fa-spin fa-3x text-gray-500"></i></div>
              <div id="empty-state" class="hidden text-center py-16"><i class="fas fa-check-circle fa-4x text-green-500"></i><h2 class="mt-4 text-2xl font-semibold">All Clear!</h2><p class="mt-2 text-gray-500">There are no items currently requiring maintenance.</p></div>
@@ -60,7 +69,7 @@
                     maintenanceList.innerHTML = '';
                     items.forEach(item => {
                         const date = item.date ? item.date.toDate().toLocaleDateString() : 'N/A';
-                        maintenanceList.innerHTML += `<div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex items-center justify-between"><div class="flex items-center"><i class="fa-solid fa-triangle-exclamation text-yellow-500 mr-4"></i><div><p class="font-semibold">${item.assetId}</p><p class="text-sm text-gray-500 dark:text-gray-400">${item.location} - Reported on ${date}</p></div></div><button id="btn-${item.id}" onclick="markAsCompleted('${item.id}')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Mark as Completed</button></div>`;
+                        maintenanceList.innerHTML += `<div class="bg-white p-4 rounded-lg shadow flex items-center justify-between"><div class="flex items-center"><i class="fa-solid fa-triangle-exclamation text-yellow-500 mr-4"></i><div><p class="font-semibold">${item.assetId}</p><p class="text-sm text-gray-500">${item.location} - Reported on ${date}</p></div></div><button id="btn-${item.id}" onclick="markAsCompleted('${item.id}')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Mark as Completed</button></div>`;
                     });
                     emptyState.classList.toggle('hidden', items.length > 0);
                 }, (error) => { console.error(error); });
