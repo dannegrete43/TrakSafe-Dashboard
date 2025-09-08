@@ -1,181 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrakSafe Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style> 
-        body { font-family: 'Inter', sans-serif; } 
-        .sidebar-icon { width: 1.5rem; height: 1.5rem; } 
-    </style>
-</head>
-<body class="bg-gray-100 text-gray-900">
-    <div class="flex h-screen">
-        <aside class="w-64 bg-white flex-shrink-0">
-            <div class="h-full flex flex-col">
-                <div class="h-16 flex items-center justify-center border-b border-gray-200">
-                    <div class="flex items-center">
-                        <img src="TrakSafe-Logo-Design.jpg" class="h-10 w-auto" alt="TrakSafe Logo">
-                        <span class="ml-3 text-xl font-semibold">TrakSafe</span>
-                    </div>
-                </div>
-                <nav class="flex-1 px-2 py-4 space-y-1">
-                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 bg-gray-100 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
-                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
-                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
-                    <a href="TrakSafe-PPE.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-helmet-safety sidebar-icon"></i><span class="ml-3">PPE Inventory</span></a>
-                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
-                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
-                </nav>
-                <div class="mt-auto p-4 border-t border-gray-200">
-                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span></a>
-                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span></a>
-                </div>
-            </div>
-        </aside>
-        <main class="flex-1 p-6 md:p-10 overflow-y-auto">
-            <header class="flex justify-between items-center mb-8">
-                <h1 class="text-3xl font-bold">Dashboard</h1>
-                <div class="flex items-center space-x-4">
-                    <div id="site-switcher" class="relative">
-                         <select id="site-filter" class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                         </select>
-                    </div>
-                    </div>
-            </header>
-            <div id="dashboard-content" class="space-y-8">
-            </div>
-            <div id="loading-spinner" class="flex justify-center items-center h-64">
-                <i class="fas fa-spinner fa-spin fa-3x text-gray-500"></i>
-            </div>
-        </main>
-    </div>
+<script type="module">
+    // Import the security guard and database connection from our auth.js file
+    import { db, protectPage } from './js/auth.js'; 
+    
+    // Import any specific Firebase functions you need for this page
+    import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    
+    // Run the security check FIRST! This is the most important part.
+    protectPage();
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    // --- All of your specific logic for the DASHBOARD page goes below ---
 
-        // --- FIREBASE AND DASHBOARD LOGIC ---
-        const firebaseConfig = { apiKey: "AIzaSyA0C9wkH7b23-njimXHRf793KI0-L4UtFw", authDomain: "inspectionapp2-88221.firebaseapp.com", projectId: "inspectionapp2-88221", storageBucket: "inspectionapp2-88221.appspot.com", messagingSenderId: "805230972315", appId: "1:805230972315:web:d00e2d1a1869aefee1653e", measurementId: "G-WHXE1XECQF" };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+    // Example: Get references to dashboard elements
+    const totalInspectionsEl = document.getElementById('total-inspections');
+    const passedCountEl = document.getElementById('passed-count');
+    const failedCountEl = document.getElementById('failed-count');
 
-        const loadingSpinner = document.getElementById("loading-spinner");
-        const dashboardContent = document.getElementById("dashboard-content");
-        const siteFilter = document.getElementById('site-filter');
-        let siteChart = null;
-        let allSitesData = [];
+    async function loadDashboardStats() {
+        // This is an example of how you might fetch data for the dashboard.
+        // You would adjust this to match your database collections.
+        try {
+            const inspectionsSnapshot = await getDocs(collection(db, "inspections"));
+            const totalInspections = inspectionsSnapshot.size;
+            
+            let passedCount = 0;
+            let failedCount = 0;
 
-        function displayDashboardLayout() {
-            dashboardContent.innerHTML = `
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                    <div class="bg-white p-6 rounded-lg shadow"><h3 class="text-gray-500">Total</h3><p id="total-stat" class="text-3xl font-bold mt-1">0</p></div>
-                    <div class="bg-white p-6 rounded-lg shadow"><h3 class="text-gray-500">Completed</h3><p id="completed-stat" class="text-3xl font-bold mt-1">0</p></div>
-                    <div class="bg-white p-6 rounded-lg shadow"><h3 class="text-green-500">Passed</h3><p id="passed-stat" class="text-3xl font-bold mt-1 text-green-500">0</p></div>
-                    <div class="bg-white p-6 rounded-lg shadow"><h3 class="text-red-500">Failed</h3><p id="failed-stat" class="text-3xl font-bold mt-1 text-red-500">0</p></div>
-                    <div class="bg-white p-6 rounded-lg shadow"><h3 class="text-yellow-500">Maintenance</h3><p id="maintenance-stat" class="text-3xl font-bold mt-1 text-yellow-500">0</p></div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-8">
-                    <h3 class="text-xl font-semibold mb-4">Site Inspection Overview</h3>
-                    <div class="h-80"><canvas id="site-overview-chart"></canvas></div>
-                </div>`;
-        }
-
-        function updateStatsUI(stats) {
-            document.getElementById("total-stat").textContent = stats.total || 0;
-            document.getElementById("completed-stat").textContent = stats.completed || 0;
-            document.getElementById("passed-stat").textContent = stats.passed || 0;
-            document.getElementById("failed-stat").textContent = stats.failed || 0;
-            document.getElementById("maintenance-stat").textContent = stats.maintenance || 0;
-        }
-
-        function renderSiteChart(chartData) {
-            const ctx = document.getElementById("site-overview-chart").getContext("2d");
-            if (siteChart) siteChart.destroy();
-            siteChart = new Chart(ctx, {
-                type: "bar",
-                data: {
-                    labels: chartData.map(site => site.id),
-                    datasets: [
-                        { label: "Completed", data: chartData.map(site => site.completed || 0), backgroundColor: "#6A96C2" },
-                        { label: "Passed", data: chartData.map(site => site.passed || 0), backgroundColor: "#8AB17D" },
-                        { label: "Failed", data: chartData.map(site => site.failed || 0), backgroundColor: "#D87C7C" }
-                    ]
-                },
-                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
-            });
-        }
-        
-        function populateSiteFilter(sites) {
-            siteFilter.innerHTML = '<option value="all">All Sites</option>';
-            sites.forEach(site => {
-                const option = document.createElement("option");
-                option.value = site.id;
-                option.textContent = site.id;
-                siteFilter.appendChild(option);
-            });
-        }
-        
-        function updateDashboardForSelection(selectedSiteId) {
-            let dataToShow = [];
-            if (selectedSiteId === 'all') {
-                dataToShow = allSitesData;
-                const combinedStats = allSitesData.reduce((acc, site) => {
-                    acc.completed += site.completed || 0;
-                    acc.passed += site.passed || 0;
-                    acc.failed += site.failed || 0;
-                    acc.remaining += site.remaining || 0;
-                    acc.maintenance += site.maintenance || 0;
-                    return acc;
-                }, { completed: 0, passed: 0, failed: 0, remaining: 0, maintenance: 0 });
-                combinedStats.total = combinedStats.completed + combinedStats.remaining;
-                updateStatsUI(combinedStats);
-            } else {
-                const selectedSiteData = allSitesData.find(site => site.id === selectedSiteId);
-                if (selectedSiteData) {
-                    dataToShow = [selectedSiteData];
-                    const stats = { ...selectedSiteData, total: (selectedSiteData.completed || 0) + (selectedSiteData.remaining || 0) };
-                    updateStatsUI(stats);
+            inspectionsSnapshot.forEach(doc => {
+                const data = doc.data();
+                // This assumes you have a 'status' field. Adjust if needed.
+                if (data.status === 'Passed') {
+                    passedCount++;
+                } else if (data.status === 'Failed') {
+                    failedCount++;
                 }
-            }
-            renderSiteChart(dataToShow);
+            });
+
+            // Update the HTML with the stats
+            if(totalInspectionsEl) totalInspectionsEl.textContent = totalInspections;
+            if(passedCountEl) passedCountEl.textContent = passedCount;
+            if(failedCountEl) failedCountEl.textContent = failedCount;
+
+        } catch (error) {
+            console.error("Error loading dashboard stats:", error);
         }
+    }
 
-        async function initialize() {
-            try {
-                await signInAnonymously(getAuth(app));
-                onSnapshot(collection(db, "sites"), (snapshot) => {
-                    loadingSpinner.classList.add("hidden");
-                    allSitesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                    if (allSitesData.length === 0) {
-                        dashboardContent.innerHTML = `<p>No site data found.</p>`;
-                        return;
-                    }
-                    displayDashboardLayout();
-                    populateSiteFilter(allSitesData);
-                    updateDashboardForSelection('all'); 
-                }, (error) => {
-                    console.error("Firebase snapshot error:", error);
-                    loadingSpinner.classList.add("hidden");
-                    dashboardContent.innerHTML = `<p>Error loading data.</p>`;
-                });
-            } catch (error) {
-                console.error("Firebase connection error:", error);
-                loadingSpinner.classList.add("hidden");
-                dashboardContent.innerHTML = `<p>Error connecting to the database.</p>`;
-            }
-        }
-
-        siteFilter.addEventListener('change', (event) => {
-            updateDashboardForSelection(event.target.value);
-        });
-
-        initialize();
-    </script>
-</body>
-</html>
+    // Run your page-specific logic when the window loads
+    window.onload = loadDashboardStats;
+</script>
