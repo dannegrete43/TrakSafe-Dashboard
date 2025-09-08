@@ -7,41 +7,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .sidebar-icon { width: 1.5rem; height: 1.5rem; }
-    </style>
+    <style> body { font-family: 'Inter', sans-serif; } .sidebar-icon { width: 1.5rem; height: 1.5rem; } </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
     <div class="flex h-screen">
         <aside class="w-64 bg-white flex-shrink-0">
-            <div class="h-full flex flex-col">
-                <div class="h-16 flex items-center justify-center border-b border-gray-200">
-                    <div class="flex items-center">
-                        <img src="TrakSafe-Logo-Design.jpg" class="h-10 w-auto" alt="TrakSafe Logo">
-                        <span class="ml-3 text-xl font-semibold">TrakSafe</span>
-                    </div>
-                </div>
-                <nav class="flex-1 px-2 py-4 space-y-1">
-                    <a href="traksafe_dashboard_live.html" class="flex items-center px-4 py-2 bg-gray-100 rounded-md"><i class="fa-solid fa-chart-pie sidebar-icon"></i><span class="ml-3">Dashboard</span></a>
-                    <a href="TrakSafe-Inspections.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-clipboard-list sidebar-icon"></i><span class="ml-3">Inspections</span></a>
-                    <a href="TrakSafe-Maintenance.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-screwdriver-wrench sidebar-icon"></i><span class="ml-3">Maintenance</span></a>
-                    <a href="TrakSafe-PPE.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-helmet-safety sidebar-icon"></i><span class="ml-3">PPE Inventory</span></a>
-                    <a href="TrakSafe-QR-Generator.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-qrcode sidebar-icon"></i><span class="ml-3">QR Generator</span></a>
-                    <a href="TrakSafe-Reports.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-file-contract sidebar-icon"></i><span class="ml-3">Reports</span></a>
-                </nav>
-                <div class="mt-auto p-4 border-t border-gray-200">
-                    <a href="TrakSafe-Settings.html" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-gear sidebar-icon"></i><span class="ml-3">Settings</span></a>
-                    <a href="index.html" class="flex items-center px-4 py-2 mt-2 text-gray-600 hover:bg-gray-100 rounded-md"><i class="fa-solid fa-right-from-bracket sidebar-icon"></i><span class="ml-3">Logout</span></a>
-                </div>
-            </div>
-        </aside>
+            </aside>
 
         <main class="flex-1 p-6 md:p-10 overflow-y-auto">
             <header class="flex justify-between items-center mb-8">
                 <h1 class="text-3xl font-bold">Dashboard</h1>
             </header>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-white p-6 rounded-lg shadow">
                     <h2 class="text-sm font-medium text-gray-500">Total Inspections</h2>
@@ -60,27 +36,17 @@
     </div>
 
     <script type="module">
-        // Import the security guard and database connection from our auth.js file
         import { db, protectPage } from './js/auth.js'; 
-        
-        // Import the specific Firebase Firestore functions you need for this page
         import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         
-        // Run the security check FIRST! This is the most important part.
-        protectPage();
+        protectPage(); // Security check runs first!
 
-        // --- All of your specific logic for the DASHBOARD page goes below ---
-
-        // Get references to dashboard elements in the HTML
         const totalInspectionsEl = document.getElementById('total-inspections');
         const passedCountEl = document.getElementById('passed-count');
         const failedCountEl = document.getElementById('failed-count');
 
-        // This function reliably determines the status, just like on your inspections page
         function getInspectionStatus(insp) {
-            if (insp.status) {
-                return insp.status;
-            }
+            if (insp.status) return insp.status;
             const isFailed = insp.extinguisherChanged === true || insp.nozzleObstructed === true || insp.physicalChanges === true || insp.pressureGaugeOK === false || insp.safetyPinIntact === false;
             return isFailed ? 'Failed' : 'Passed';
         }
@@ -88,39 +54,20 @@
         async function loadDashboardStats() {
             try {
                 const inspectionsSnapshot = await getDocs(collection(db, "inspections"));
-                const totalInspections = inspectionsSnapshot.size;
-                
-                let passedCount = 0;
-                let failedCount = 0;
-
+                let passedCount = 0, failedCount = 0;
                 inspectionsSnapshot.forEach(doc => {
                     const status = getInspectionStatus(doc.data());
-                    if (status === 'Passed') {
-                        passedCount++;
-                    } else if (status === 'Failed') {
-                        failedCount++;
-                    }
+                    if (status === 'Passed') passedCount++;
+                    else if (status === 'Failed') failedCount++;
                 });
-
-                // Update the HTML with the final counts
-                if(totalInspectionsEl) totalInspectionsEl.textContent = totalInspections;
+                if(totalInspectionsEl) totalInspectionsEl.textContent = inspectionsSnapshot.size;
                 if(passedCountEl) passedCountEl.textContent = passedCount;
                 if(failedCountEl) failedCountEl.textContent = failedCount;
-
             } catch (error) {
                 console.error("Error loading dashboard stats:", error);
-                if(totalInspectionsEl) totalInspectionsEl.textContent = "Error";
-                if(passedCountEl) passedCountEl.textContent = "Error";
-                if(failedCountEl) failedCountEl.textContent = "Error";
             }
         }
-
-        // Run your page-specific logic directly to avoid issues
         loadDashboardStats();
     </script>
 </body>
 </html>
-
-    // Run your page-specific logic directly
-loadDashboardStats();
-</script>
