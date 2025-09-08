@@ -27,7 +27,8 @@ function protectPage() {
         if (!user) {
             // No user is signed in, so redirect to the login page.
             console.log("No user found, redirecting to login.");
-            window.location.href = '/login.html'; // Or whatever your login page is named
+            // Make sure your login page is named 'login.html' or change the path here
+            window.location.href = '/login.html'; 
         }
     });
 }
