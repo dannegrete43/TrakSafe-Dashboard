@@ -1,32 +1,29 @@
-// In /js/login.js
-import { auth } from './auth.js'; 
-import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+// In /js/auth.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-const loginForm = document.getElementById('login-form');
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
-const errorMessage = document.getElementById('error-message');
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY", // Paste your actual config keys here
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
-onAuthStateChanged(auth, user => {
-    if (user) {
-        // If user is already logged in, send them to the dashboard.
-        window.location.href = '/traksafe_dashboard_live.html';
-    }
-});
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = emailInput.value;
-    const password = passwordInput.value;
-    errorMessage.classList.add('hidden');
+function protectPage() {
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            // If no user is logged in, redirect to the login page.
+            window.location.href = '/index.html'; 
+        }
+    });
+}
 
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // On success, the onAuthStateChanged listener above will handle the redirect.
-            console.log("Login successful!");
-        })
-        .catch((error) => {
-            errorMessage.textContent = "Error: Invalid email or password.";
-            errorMessage.classList.remove('hidden');
-        });
-});
+export { auth, db, protectPage };
